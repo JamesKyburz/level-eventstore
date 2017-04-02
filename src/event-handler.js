@@ -1,13 +1,11 @@
 const Client = require('./client')
 
-module.exports = ({ url, retry, since, log }) => {
-  const client = Client({ url, retry })
-
+module.exports = ({ stream, since, log }) => {
   return (handlers) => {
     poll()
     let run = true
     function poll () {
-      client.stream(log, since)
+      stream(log, since)
       .on('data', (data) => {
         const value = data.value
         const handler = handlers[value.type]

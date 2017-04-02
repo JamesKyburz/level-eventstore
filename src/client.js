@@ -1,31 +1,35 @@
 const Client = require('leveldb-mount/client')
-const uuid = require('uuid')
-const Logs = require('level-logs')
-const async = require('async')
-const queues = {}
+const Logs = require('./logs')
+const fetch = require('isomorphic-fetch')
+const validateEvent = require('./validate-event')
+const eventHandler = require('./event-handler')
 
-module.exports = ({ url, retry }) => {
-  const client = Client({ url, retry })
-  const logs = Logs(client.db)
-  return { append, stream }
+module.exports = ({ wsUrl, httpUrl }) => {
+  return { append, handleEvents }
 
   function append (event, cb) {
-    if (!event.log) throw new Error('event log must be specified')
-    if (!event.type) throw new Error('event type must be specified')
-    if (!event.id) event.id = uuid.v4()
-    const log = event.log
-    delete event.log
-    event.createdAt = Date.now()
-    if (!queues[log]) {
-      queues[log] = async.queue(({ log, event }, cb) => {
-        logs.append(log, event, cb)
-      }, 1)
-    }
-    const queue = queues[log]
-    queue.push({ log, event }, cb)
+    const error = validateEvent(event)
+    if (error) return cb(error)
+
+    fetch(httpUrl + '/append', {
+      method: 'POST',
+      body: JSON.stringify(event)
+    })
+    .then((res) => {
+      if (res.status !== 200) return cb(new Error({ status: res.status }))
+      return res.json()
+    })
+    .then((json) => cb(null, json))
+    .catch(cb)
   }
 
-  function stream (log, since) {
-    return logs.createReadStream(log, { since })
+  function handleEvents ({ log, since }) {
+    const client = Client({ url: wsUrl })
+    const logs = Logs(client.db)
+    return eventHandler({
+      stream (log, since) { return logs.createReadStream(log, { since }) },
+      since,
+      log
+    })
   }
 }

@@ -7,17 +7,22 @@
     "missing": "dependency-sync --once"
   },
   "dependencies": {
-    "async": "2.2.0",
+    "isomorphic-fetch": "2.2.1",
+    "level-create-batch": "1.1.0",
     "level-logs": "1.1.2",
     "leveldb-mount": "4.0.13",
-    "redux-actions": "2.0.1",
+    "once": "1.4.0",
+    "server-base": "4.0.19",
     "uuid": "3.0.1"
   },
   "files": [
     "src"
   ],
   "devDependencies": {
-    "dependency-sync": "2.0.23"
+    "dependency-sync": "2.0.23",
+    "faucet": "0.0.1",
+    "tap-spec": "4.1.1",
+    "tape": "4.6.3"
   },
   "dependency-sync": {
     "args": [

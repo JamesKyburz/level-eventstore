@@ -22,58 +22,50 @@ docker pull jameskyburz/level-eventstore:v1.0.0
 ᐅ docker run --rm --name level-eventstore -p 5000:5000 jameskyburz/level-eventstore:v1.0.0
 ```
 
-# example adding events
+# example
 
 ```js
-const retry = 3000
-const since = 0
-const url = 'ws://guest:guest@localhost:5000'
-const client = require('./').client({ url, retry })
+const wsUrl = 'ws://guest:guest@localhost:5000'
+const httpUrl = 'http://guest:guest@localhost:5000'
+const client = require('level-eventstore').client({ wsUrl, httpUrl })
 
 client.append({
   log: 'users',
   type: 'signup',
-  email: 'foo@bar'
-}, done)
+  payload: {
+    email: 'foo@bar'
+  }
+}, (err) => {
+  if (err) console.error(err)
+})
 
 client.append({
   log: 'users',
-  type: 'signup',
-  email: 'baz@car'
-}, done)
+  type: 'verifyAccount',
+  payload: {
+    email: 'baz@car',
+    id: '38390783-cd60-4190-8b94-a3d4ac24d653'
+  }
+}, (err) => {
+  if (err) console.error(err)
+})
 
-function done (err) {
-  client.stream('users', since)
-    .on('data', (data) => {
-      since = data.seq
-      console.log(data)
-    )
-}```
-
-```js
-{ log: 'users',
-  seq: 1,
-  value:
-   { type: 'signup',
-     email: 'foo@bar',
-     id: '5dd8ea73-637c-4c2c-bb7a-a4c2edc8f736',
-     createdAt: 1490864934511 } }
-{ log: 'users',
-  seq: 2,
-  value:
-   { type: 'signup',
-     email: 'baz@car',
-     id: '9988dd58-802c-4afb-8af9-b4797dc08a03',
-     createdAt: 1490864934512 } }
-```
-
-# example event lister
-
-```js
-const url = 'ws://guest:guest@localhost:5000'
-const close = require('./').eventHandler({ url, log: 'users' })({
+const close = client.handleEvents({ wsUrl, log: 'users', since: 0 })({
   signup (event) {
     console.log('insert', event)
+  },
+  verifyAccount (event) {
+    console.log('verify', event)
   }
 })
+
+insert { payload: { email: 'foo@bar', id: 'debde3de-0f3f-41e6-af61-20ee936fefa6' },
+  createdat: 1491234249536 }
+
+verify { payload: { email: 'baz@car', id: '38390783-cd60-4190-8b94-a3d4ac24d653' },
+  createdat: 1491234249538 }
 ```
+
+# license
+
+[Apache License, Version 2.0](LICENSE)
