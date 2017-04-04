@@ -2,6 +2,10 @@
   "name": "level-eventstore",
   "version": "1.0.0",
   "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JamesKyburz/level-eventstore.git"
+  },
   "scripts": {
     "start": "node src/index",
     "lint": "standard",
