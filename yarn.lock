@@ -301,10 +301,6 @@ browser-resolve@^1.11.0, browser-resolve@^1.7.0:
   dependencies:
     resolve "1.1.7"
 
-browser-split@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/browser-split/-/browser-split-0.0.0.tgz#41419caef769755929dd518967d3eec0a6262771"
-
 browserify-aes@^1.0.0, browserify-aes@^1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/browserify-aes/-/browserify-aes-1.0.6.tgz#5e7725dbdef1fd5930d4ebab48567ce451c48a0a"
@@ -518,12 +514,6 @@ cipher-base@^1.0.0, cipher-base@^1.0.1:
   dependencies:
     inherits "^2.0.1"
 
-class-list@~0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/class-list/-/class-list-0.1.1.tgz#9b9745192c4179b5da0a0d7633658e3c70d796cb"
-  dependencies:
-    indexof "0.0.1"
-
 cliui@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cliui/-/cliui-2.1.0.tgz#4b475760ff80264c762c3a1719032e91c7fea0d1"
@@ -617,13 +607,6 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
 
-console-log@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/console-log/-/console-log-1.0.0.tgz#d24c2bb0ac822e2dc3c63dece94ba23f7589c01f"
-  dependencies:
-    hyperscript "~1.1.0"
-    observable "~1.4.2"
-
 constants-browserify@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
@@ -716,13 +699,6 @@ dashdash@^1.12.0:
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
   dependencies:
     assert-plus "^1.0.0"
-
-data-set@~0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/data-set/-/data-set-0.2.2.tgz#46c8fc882fb75708e113d3231ce6eab69dc64c9f"
-  dependencies:
-    individual "~0.1.1"
-    weakmap "0.0.6"
 
 data-uri-to-buffer@0:
   version "0.0.4"
@@ -1286,10 +1262,6 @@ glob@^7.0.5, glob@^7.1.0, glob@^7.1.1, glob@~7.1.1:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-global@~0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/global/-/global-0.1.5.tgz#28f2a7470f8e13671a7b1da7b3199e32459b503e"
-
 graceful-fs@^4.1.10, graceful-fs@^4.1.2:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
@@ -1388,14 +1360,6 @@ https-proxy-agent@1:
     debug "2"
     extend "3"
 
-hyperscript@~1.1.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/hyperscript/-/hyperscript-1.1.2.tgz#b62c5ecca1186d6e5d3564fbd6cab775c3e4a707"
-  dependencies:
-    browser-split "0.0.0"
-    class-list "~0.1.0"
-    data-set "~0.2.2"
-
 iconv-lite@^0.4.5, iconv-lite@~0.4.13:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
@@ -1415,12 +1379,6 @@ imurmurhash@^0.1.4:
 indexof@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/indexof/-/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
-
-individual@~0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/individual/-/individual-0.1.1.tgz#7f47184779e74a1ac633972d684281ea529f7854"
-  dependencies:
-    global "~0.1.5"
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -1734,14 +1692,12 @@ level@^1.4.0:
     level-packager "~1.2.0"
     leveldown "~1.6.0"
 
-leveldb-mount@4.0.14:
-  version "4.0.14"
-  resolved "https://registry.yarnpkg.com/leveldb-mount/-/leveldb-mount-4.0.14.tgz#4a6ac7e473a5cbaa009e5cb11b9e4e1d7bb3ff85"
+leveldb-mount@4.0.15:
+  version "4.0.15"
+  resolved "https://registry.yarnpkg.com/leveldb-mount/-/leveldb-mount-4.0.15.tgz#807105ac75a8d273afaf149ace3d5eb3f5ef7d5c"
   dependencies:
     browserify "14.1.0"
-    console-log "1.0.0"
     debug "2.6.3"
-    end-of-stream "1.4.0"
     level-party "3.0.4"
     level-range-emitter "2.0.14"
     multileveldown "2.3.0"
@@ -2052,10 +2008,6 @@ object.omit@^2.0.0:
   dependencies:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
-
-observable@~1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/observable/-/observable-1.4.2.tgz#6fe864da9f971f6a1f7f3503d3543004c4630e80"
 
 once@1.4.0, once@^1.3.0, once@^1.3.1, once@^1.3.3, once@^1.4.0:
   version "1.4.0"
@@ -3150,10 +3102,6 @@ vm-browserify@~0.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
   dependencies:
     indexof "0.0.1"
-
-weakmap@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/weakmap/-/weakmap-0.0.6.tgz#0c4fbde02e3b371f9222013fc6632a5c45419b29"
 
 websocket-stream@3.3.3:
   version "3.3.3"
