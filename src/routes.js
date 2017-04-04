@@ -25,7 +25,7 @@ function routes ({ sequences, credentials }, router, context) {
       const log = event.log
       const id = event.payload.id
       delete event.log
-      event.createdat = Date.now()
+      event.createdAt = Date.now()
       const currentStreamVersion = yield (cb) => streams.head(id, cb)
       const streamKey = streams.key(id, currentStreamVersion + 1)
       sequences[log] = sequences[log] || 0

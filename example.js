@@ -24,10 +24,10 @@ client.append({
 })
 
 client.handleEvents({ wsUrl, log: 'users', since: 0 })({
-  signup (payload) {
+  signup ({ payload }) {
     console.log('insert', payload)
   },
-  verifyAccount (payload) {
+  verifyAccount ({ payload }) {
     console.log('verify', payload)
   }
 })

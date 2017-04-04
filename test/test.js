@@ -82,10 +82,10 @@ test('event handler', (t) => {
   ]
   const state = {}
   const close = client.handleEvents({ log: 'users' })({
-    signup (payload) {
+    signup ({ payload }) {
       state[payload.id] = { email: payload.email }
     },
-    verifyAccount (payload) {
+    verifyAccount ({ payload }) {
       state[payload.id].verified = true
       t.deepEqual(state, {
         'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
