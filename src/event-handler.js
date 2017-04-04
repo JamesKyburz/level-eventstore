@@ -10,8 +10,7 @@ module.exports = ({ stream, since, log }) => {
         const value = data.value
         const handler = handlers[value.type]
         if (handler) {
-          delete value.type
-          handler(value)
+          handler(value.payload)
         }
         since = data.seq
       })

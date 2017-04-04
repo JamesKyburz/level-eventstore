@@ -9,8 +9,8 @@ module.exports = routes
 
 function routes (sequences, router, context) {
   router.set('/append', {
-    * post (req, res) {
-      const event = yield req.json()
+    * put (req, res) {
+      const event = yield req.json({ log: false })
       const error = validateEvent(event)
       if (error) return res.error(error)
       if (!event.payload.id) event.payload.id = uuid.v4()
