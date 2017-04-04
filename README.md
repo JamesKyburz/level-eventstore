@@ -43,7 +43,6 @@ client.append({
   log: 'users',
   type: 'verifyAccount',
   payload: {
-    email: 'baz@car',
     id: '38390783-cd60-4190-8b94-a3d4ac24d653'
   }
 }, (err) => {
@@ -51,19 +50,17 @@ client.append({
 })
 
 const close = client.handleEvents({ wsUrl, log: 'users', since: 0 })({
-  signup (event) {
-    console.log('insert', event)
+  signup (payload) {
+    console.log('insert', payload)
   },
-  verifyAccount (event) {
-    console.log('verify', event)
+  verifyAccount (payload) {
+    console.log('verify', payload)
   }
 })
 
-insert { payload: { email: 'foo@bar', id: 'debde3de-0f3f-41e6-af61-20ee936fefa6' },
-  createdat: 1491234249536 }
+insert { email: 'foo@bar', id: '1def7ce5-9da4-40cc-8594-c739fad36a2b' }
+verify { id: '38390783-cd60-4190-8b94-a3d4ac24d653' }
 
-verify { payload: { email: 'baz@car', id: '38390783-cd60-4190-8b94-a3d4ac24d653' },
-  createdat: 1491234249538 }
 ```
 
 # license

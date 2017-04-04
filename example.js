@@ -24,10 +24,10 @@ client.append({
 })
 
 const close = client.handleEvents({ wsUrl, log: 'users', since: 0 })({
-  signup (event) {
-    console.log('insert', event)
+  signup (payload) {
+    console.log('insert', payload)
   },
-  verifyAccount (event) {
-    console.log('verify', event)
+  verifyAccount (payload) {
+    console.log('verify', payload)
   }
 })
