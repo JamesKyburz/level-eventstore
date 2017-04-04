@@ -17,7 +17,7 @@
     "level-create-batch": "1.1.0",
     "level-logs": "1.1.2",
     "leveldb-mount": "4.0.15",
-    "make-fetch-happen": "1.4.0",
+    "make-fetch-happen": "1.5.0",
     "once": "1.4.0",
     "run-duck-run": "1.0.5",
     "server-base": "4.0.19",
