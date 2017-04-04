@@ -74,7 +74,7 @@ test('append with valid event', (t) => {
   })
 })
 
-test('event handler', (t) => {
+test('event handlers', (t) => {
   t.plan(1)
   const events = [
     { type: 'signup', log: 'users', payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } },
@@ -99,6 +99,26 @@ test('event handler', (t) => {
   events.forEach((e) => client.append(e, { retry: true }, (err, data) => {
     if (err) return t.fail(`failed to append event ${err}`)
   }))
+})
+
+test('generator event handlers', (t) => {
+  t.plan(1)
+  const state = {}
+  const close = client.handleEvents({ log: 'users' })({
+    * signup ({ payload }) {
+      state[payload.id] = { email: payload.email }
+    },
+    * verifyAccount ({ payload }) {
+      state[payload.id].verified = true
+      t.deepEqual(state, {
+        'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
+          email: 'foo@bar.com',
+          verified: true
+        }
+      }, 'correct state created')
+      close()
+    }
+  })
 })
 
 test('cleanup', (t) => {

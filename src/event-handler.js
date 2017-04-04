@@ -1,4 +1,7 @@
-module.exports = ({ stream, since, log }) => {
+const runGenerator = require('run-duck-run')
+const isGenerator = require('is-generator-function')
+
+module.exports = ({ stream, since, log, onError }) => {
   return (handlers) => {
     poll()
     let run = true
@@ -8,7 +11,13 @@ module.exports = ({ stream, since, log }) => {
         const value = data.value
         const handler = handlers[value.type]
         if (handler) {
-          handler({ payload: value.payload, since: data.seq })
+          if (isGenerator(handler)) {
+            runGenerator(handler, onError || (f => f))({
+              payload: value.payload, since: data.seq
+            })
+          } else {
+            handler({ payload: value.payload, since: data.seq })
+          }
         }
         since = data.seq
       })
