@@ -1,5 +1,3 @@
-const Client = require('./client')
-
 module.exports = ({ stream, since, log }) => {
   return (handlers) => {
     poll()

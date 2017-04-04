@@ -10,15 +10,6 @@ const { spawn } = require('child_process')
 const rimraf = require('rimraf')
 const path = require('path')
 
-const get = (url, cb) => {
-  const request = http.get(url, (res) => {
-    if (res.statusCode !== 200) return cb(new Error('error'))
-    res.pipe(concat((data) => cb(null, data)))
-    res.resume()
-  })
-  request.on('error', cb)
-}
-
 let server
 
 test('start server', (t) => {
@@ -87,7 +78,7 @@ test('event handler', (t) => {
   t.plan(1)
   const events = [
     { type: 'signup', log: 'users', payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } },
-    { type: 'verifyAccount', log: 'users', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } },
+    { type: 'verifyAccount', log: 'users', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } }
   ]
   const state = {}
   const close = client.handleEvents({ log: 'users' })({
@@ -102,6 +93,7 @@ test('event handler', (t) => {
           verified: true
         }
       }, 'correct state created')
+      close()
     }
   })
   events.forEach((e) => client.append(e, { retry: true }, (err, data) => {

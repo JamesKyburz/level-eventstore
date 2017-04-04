@@ -23,7 +23,7 @@ client.append({
   if (err) console.error(err)
 })
 
-const close = client.handleEvents({ wsUrl, log: 'users', since: 0 })({
+client.handleEvents({ wsUrl, log: 'users', since: 0 })({
   signup (payload) {
     console.log('insert', payload)
   },
