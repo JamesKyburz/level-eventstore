@@ -7,7 +7,15 @@ const uuid = require('uuid')
 
 module.exports = routes
 
-function routes (sequences, router, context) {
+function routes ({ sequences, credentials }, router, context) {
+  context.use((req, res, next) => {
+    if (req.headers.authorization) {
+      const auth = new Buffer(req.headers.authorization.slice(6), 'base64').toString()
+      if (auth === credentials) return next()
+    }
+    res.writeHead(401, { 'WWW-Authenticate': 'Basic' })
+    res.end('Access denied')
+  })
   router.set('/append', {
     * put (req, res) {
       const event = yield req.json({ log: false })
