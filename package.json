@@ -20,7 +20,7 @@
     "make-fetch-happen": "1.5.0",
     "once": "1.4.0",
     "run-duck-run": "1.0.5",
-    "server-base": "4.0.19",
+    "server-base": "4.0.23",
     "uuid": "3.0.1"
   },
   "files": [
