@@ -27,7 +27,7 @@ module.exports = ({ stream, since, log, onError, updateSince }) => {
             handler(value.payload, handled)
           }
         } else {
-          cb(null)
+          handled(null)
         }
       })
 
