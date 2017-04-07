@@ -1,28 +1,39 @@
 const runGenerator = require('run-duck-run')
 const isGenerator = require('is-generator-function')
+const through = require('through2')
+const pump = require('pump')
 
-module.exports = ({ stream, since, log, onError }) => {
+module.exports = ({ stream, since, log, onError, updateSince }) => {
+  onError = onError || (f => f)
+  updateSince = updateSince || (f => f)
   return (handlers) => {
     poll()
     let run = true
     function poll () {
-      stream(log, since)
-      .on('data', (data) => {
+      const rs = stream(log, since)
+      const handle = through.obj((data, enc, cb) => {
         const value = data.value
         const handler = handlers[value.type]
+        const handled = (err) => {
+          if (err) return cb(err)
+          updateSince(data.seq)
+          since = data.seq
+          cb(null)
+        }
         if (handler) {
           if (isGenerator(handler)) {
-            runGenerator(handler, onError || (f => f))({
-              payload: value.payload, since: data.seq
-            })
+            runGenerator(handler, onError)(value.payload, handled)
           } else {
-            handler({ payload: value.payload, since: data.seq })
+            handler(value.payload, handled)
           }
+        } else {
+          cb(null)
         }
-        since = data.seq
       })
-      .on('end', () => {
-        if (run) setTimeout(poll, 300)
+
+      pump(rs, handle, (err) => {
+        if (err) onError(err)
+        if (run) setTimeout(poll, err ? 30000 : 300)
       })
     }
 

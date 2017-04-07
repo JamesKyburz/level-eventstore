@@ -81,11 +81,12 @@ test('event handlers', (t) => {
     { type: 'verifyAccount', log: 'users', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } }
   ]
   const state = {}
-  const close = client.handleEvents({ log: 'users' })({
-    signup ({ payload }) {
+  const close = client.handleEvents({ log: 'users', onError: (err) => console.error(err) })({
+    signup (payload, cb) {
       state[payload.id] = { email: payload.email }
+      cb(null)
     },
-    verifyAccount ({ payload }) {
+    verifyAccount (payload, cb) {
       state[payload.id].verified = true
       t.deepEqual(state, {
         'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
@@ -93,6 +94,7 @@ test('event handlers', (t) => {
           verified: true
         }
       }, 'correct state created')
+      cb(null)
       close()
     }
   })
@@ -105,10 +107,11 @@ test('generator event handlers', (t) => {
   t.plan(1)
   const state = {}
   const close = client.handleEvents({ log: 'users' })({
-    * signup ({ payload }) {
+    * signup (payload, cb) {
       state[payload.id] = { email: payload.email }
+      cb(null)
     },
-    * verifyAccount ({ payload }) {
+    * verifyAccount (payload, cb) {
       state[payload.id].verified = true
       t.deepEqual(state, {
         'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
@@ -116,6 +119,7 @@ test('generator event handlers', (t) => {
           verified: true
         }
       }, 'correct state created')
+      cb(null)
       close()
     }
   })

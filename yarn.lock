@@ -404,6 +404,58 @@ browserify@14.1.0:
     vm-browserify "~0.0.1"
     xtend "^4.0.0"
 
+browserify@14.3.0:
+  version "14.3.0"
+  resolved "https://registry.yarnpkg.com/browserify/-/browserify-14.3.0.tgz#fd003a2386ac1aec127f097885a3cc6373b745c4"
+  dependencies:
+    JSONStream "^1.0.3"
+    assert "^1.4.0"
+    browser-pack "^6.0.1"
+    browser-resolve "^1.11.0"
+    browserify-zlib "~0.1.2"
+    buffer "^5.0.2"
+    cached-path-relative "^1.0.0"
+    concat-stream "~1.5.1"
+    console-browserify "^1.1.0"
+    constants-browserify "~1.0.0"
+    crypto-browserify "^3.0.0"
+    defined "^1.0.0"
+    deps-sort "^2.0.0"
+    domain-browser "~1.1.0"
+    duplexer2 "~0.1.2"
+    events "~1.1.0"
+    glob "^7.1.0"
+    has "^1.0.0"
+    htmlescape "^1.1.0"
+    https-browserify "^1.0.0"
+    inherits "~2.0.1"
+    insert-module-globals "^7.0.0"
+    labeled-stream-splicer "^2.0.0"
+    module-deps "^4.0.8"
+    os-browserify "~0.1.1"
+    parents "^1.0.1"
+    path-browserify "~0.0.0"
+    process "~0.11.0"
+    punycode "^1.3.2"
+    querystring-es3 "~0.2.0"
+    read-only-stream "^2.0.0"
+    readable-stream "^2.0.2"
+    resolve "^1.1.4"
+    shasum "^1.0.0"
+    shell-quote "^1.6.1"
+    stream-browserify "^2.0.0"
+    stream-http "^2.0.0"
+    string_decoder "~0.10.0"
+    subarg "^1.0.0"
+    syntax-error "^1.1.1"
+    through2 "^2.0.0"
+    timers-browserify "^1.0.1"
+    tty-browserify "~0.0.0"
+    url "~0.11.0"
+    util "~0.10.1"
+    vm-browserify "~0.0.1"
+    xtend "^4.0.0"
+
 buffer-equal@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/buffer-equal/-/buffer-equal-0.0.1.tgz#91bc74b11ea405bc916bc6aa908faafa5b4aac4b"
@@ -573,7 +625,7 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
-concat-stream@1.6.0, concat-stream@^1.5.0:
+concat-stream@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
   dependencies:
@@ -581,20 +633,20 @@ concat-stream@1.6.0, concat-stream@^1.5.0:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+concat-stream@^1.5.0, concat-stream@~1.5.0, concat-stream@~1.5.1:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.5.2.tgz#708978624d856af41a5a741defdd261da752c266"
+  dependencies:
+    inherits "~2.0.1"
+    readable-stream "~2.0.0"
+    typedarray "~0.0.5"
+
 concat-stream@~1.4.5:
   version "1.4.10"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.4.10.tgz#acc3bbf5602cb8cc980c6ac840fa7d8603e3ef36"
   dependencies:
     inherits "~2.0.1"
     readable-stream "~1.1.9"
-    typedarray "~0.0.5"
-
-concat-stream@~1.5.0, concat-stream@~1.5.1:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.5.2.tgz#708978624d856af41a5a741defdd261da752c266"
-  dependencies:
-    inherits "~2.0.1"
-    readable-stream "~2.0.0"
     typedarray "~0.0.5"
 
 console-browserify@^1.1.0:
@@ -786,12 +838,12 @@ delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
 
-dependency-sync@2.0.23:
-  version "2.0.23"
-  resolved "https://registry.yarnpkg.com/dependency-sync/-/dependency-sync-2.0.23.tgz#20937a2f482de06847b15fd8843b6bb2923f8c8e"
+dependency-sync@2.0.24:
+  version "2.0.24"
+  resolved "https://registry.yarnpkg.com/dependency-sync/-/dependency-sync-2.0.24.tgz#141fff2718b3c21b8d6a0eb1bc49cd5cebe3b941"
   dependencies:
     bin-path "0.0.3"
-    browserify "14.1.0"
+    browserify "14.3.0"
     builtins "1.0.3"
     chokidar "1.6.1"
     concat-stream "1.6.0"
@@ -1348,6 +1400,10 @@ http-signature@~1.1.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
+https-browserify@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
+
 https-browserify@~0.0.0:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
@@ -1760,9 +1816,9 @@ ltgt@2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ltgt/-/ltgt-2.1.3.tgz#10851a06d9964b971178441c23c9e52698eece34"
 
-make-fetch-happen@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/make-fetch-happen/-/make-fetch-happen-1.4.0.tgz#0535dad55ed6afb7e24562a070e7ae7e254e046a"
+make-fetch-happen@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/make-fetch-happen/-/make-fetch-happen-1.5.0.tgz#fd5e5e93dc48ede0b16e440915c3ec402038e7d7"
   dependencies:
     bluebird "^3.5.0"
     cacache "^7.0.2"
@@ -2133,18 +2189,6 @@ performance-now@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-0.2.0.tgz#33ef30c5c77d4ea21c5a53869d91b56d8f2555e5"
 
-pino@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/pino/-/pino-4.0.1.tgz#47c1c3603a16ddbbb186abfd861cf19dc6164e9e"
-  dependencies:
-    chalk "^1.1.1"
-    fast-json-parse "^1.0.0"
-    fast-safe-stringify "^1.1.3"
-    flatstr "^1.0.4"
-    pump "^1.0.2"
-    quick-format-unescaped "^1.0.0"
-    split2 "^2.0.1"
-
 pino@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/pino/-/pino-4.0.2.tgz#f272d436ffb6f66fd4d715e09d085a8999398dd3"
@@ -2260,7 +2304,7 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-pump@^1.0.0, pump@^1.0.1, pump@^1.0.2:
+pump@1.0.2, pump@^1.0.0, pump@^1.0.1, pump@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pump/-/pump-1.0.2.tgz#3b3ee6512f94f0e575538c17995f9f16990a5d51"
   dependencies:
@@ -2536,10 +2580,6 @@ ripemd160@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-1.0.1.tgz#93a4bbd4942bc574b69a8fa57c71de10ecca7d6e"
 
-run-duck-run@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/run-duck-run/-/run-duck-run-1.0.0.tgz#37e9b476e6ab924b9b1e5b6e19265d6e193626ec"
-
 run-duck-run@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/run-duck-run/-/run-duck-run-1.0.5.tgz#b4c5b0a61f485051c31fbce8ee600cf6ee7ce419"
@@ -2570,42 +2610,30 @@ semver@~5.1.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.1.1.tgz#a3292a373e6f3e0798da0b20641b9a9c5bc47e19"
 
-server-base-log@2.1.6:
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/server-base-log/-/server-base-log-2.1.6.tgz#0bae01182669de41460168adcd12b25bc90dfa4d"
-  dependencies:
-    pino "4.0.1"
-
-server-base-log@4.0.12:
-  version "4.0.12"
-  resolved "https://registry.yarnpkg.com/server-base-log/-/server-base-log-4.0.12.tgz#bfaf96b378a3c21a4120fb63c0817180c589f53e"
+server-base-log@4.0.23:
+  version "4.0.23"
+  resolved "https://registry.yarnpkg.com/server-base-log/-/server-base-log-4.0.23.tgz#e462e883362760848b76c030fcf3447b2178b9ca"
   dependencies:
     pino "4.0.2"
 
-server-base-log@4.0.19:
-  version "4.0.19"
-  resolved "https://registry.yarnpkg.com/server-base-log/-/server-base-log-4.0.19.tgz#7835d2f94f56961aece0a2aa3adb584ef9f470b4"
-  dependencies:
-    pino "4.0.2"
-
-server-base-router@^4.0.19:
-  version "4.0.19"
-  resolved "https://registry.yarnpkg.com/server-base-router/-/server-base-router-4.0.19.tgz#442a7a1fb2027c0d7086ddaeee3b40b19a3921b3"
+server-base-router@4.0.23:
+  version "4.0.23"
+  resolved "https://registry.yarnpkg.com/server-base-router/-/server-base-router-4.0.23.tgz#de9cb6935015ea55520f1d13789215541861a33b"
   dependencies:
     body "5.1.0"
     http-hash "2.0.0"
     is-generator-function "1.0.6"
     mime "1.3.4"
-    run-duck-run "1.0.0"
-    server-base-log "2.1.6"
+    run-duck-run "1.0.5"
+    server-base-log "4.0.23"
 
-server-base@4.0.19:
-  version "4.0.19"
-  resolved "https://registry.yarnpkg.com/server-base/-/server-base-4.0.19.tgz#45bbd722494ecb25ae28b4d319382b7be56478db"
+server-base@4.0.23:
+  version "4.0.23"
+  resolved "https://registry.yarnpkg.com/server-base/-/server-base-4.0.23.tgz#6014156fdf5ca996f2286a59ec9f87bdf3ddcd65"
   dependencies:
     dotenv "4.0.0"
-    server-base-log "4.0.12"
-    server-base-router "^4.0.19"
+    server-base-log "4.0.23"
+    server-base-router "4.0.23"
 
 set-blocking@~2.0.0:
   version "2.0.0"
@@ -2970,19 +2998,19 @@ tar@^2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
+through2@2.0.3, through2@^2.0.0, through2@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
+  dependencies:
+    readable-stream "^2.1.5"
+    xtend "~4.0.1"
+
 through2@^0.6.3:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-0.6.5.tgz#41ab9c67b29d57209071410e1d7a7a968cd3ad48"
   dependencies:
     readable-stream ">=1.0.33-1 <1.1.0-0"
     xtend ">=4.0.0 <4.1.0-0"
-
-through2@^2.0.0, through2@^2.0.2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
-  dependencies:
-    readable-stream "^2.1.5"
-    xtend "~4.0.1"
 
 through2@~0.2.3:
   version "0.2.3"

@@ -19,8 +19,10 @@
     "leveldb-mount": "4.0.15",
     "make-fetch-happen": "1.5.0",
     "once": "1.4.0",
+    "pump": "1.0.2",
     "run-duck-run": "1.0.5",
     "server-base": "4.0.23",
+    "through2": "2.0.3",
     "uuid": "3.0.1"
   },
   "files": [

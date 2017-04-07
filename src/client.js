@@ -31,13 +31,15 @@ module.exports = ({ wsUrl, httpUrl }) => {
     .catch(cb)
   }
 
-  function handleEvents ({ log, since }) {
+  function handleEvents ({ log, since, onError, updateSince }) {
     const client = Client({ url: wsUrl })
     const logs = Logs(client.db)
     return eventHandler({
       stream (log, since) { return logs.createReadStream(log, { since }) },
       since,
-      log
+      log,
+      onError,
+      updateSince
     })
   }
 }
