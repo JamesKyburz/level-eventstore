@@ -5,7 +5,7 @@ const pump = require('pump')
 
 module.exports = ({ stream, since, log, onError, updateSince }) => {
   onError = onError || (f => f)
-  updateSince = updateSince || (f => f)
+  updateSince = updateSince || ((seq, cb) => cb(null))
   return (handlers) => {
     poll()
     let run = true
@@ -14,11 +14,18 @@ module.exports = ({ stream, since, log, onError, updateSince }) => {
       const handle = through.obj((data, enc, cb) => {
         const value = data.value
         const handler = handlers[value.type]
-        const handled = (err) => {
+        const next = (err) => {
           if (err) return cb(err)
-          updateSince(data.seq)
           since = data.seq
           cb(null)
+        }
+        const handled = (err) => {
+          if (err) return cb(err)
+          if (isGenerator(updateSince)) {
+            runGenerator(updateSince, next)(data.seq)
+          } else {
+            updateSince(data.seq, next)
+          }
         }
         if (handler) {
           if (isGenerator(handler)) {
