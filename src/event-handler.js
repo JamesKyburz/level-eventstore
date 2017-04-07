@@ -22,7 +22,7 @@ module.exports = ({ stream, since, log, onError, updateSince }) => {
         }
         if (handler) {
           if (isGenerator(handler)) {
-            runGenerator(handler, onError)(value.payload, handled)
+            runGenerator(handler, handled)(value.payload)
           } else {
             handler(value.payload, handled)
           }

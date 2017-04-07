@@ -107,11 +107,10 @@ test('generator event handlers', (t) => {
   t.plan(1)
   const state = {}
   const close = client.handleEvents({ log: 'users' })({
-    * signup (payload, cb) {
+    * signup (payload) {
       state[payload.id] = { email: payload.email }
-      cb(null)
     },
-    * verifyAccount (payload, cb) {
+    * verifyAccount (payload) {
       state[payload.id].verified = true
       t.deepEqual(state, {
         'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
@@ -119,7 +118,6 @@ test('generator event handlers', (t) => {
           verified: true
         }
       }, 'correct state created')
-      cb(null)
       close()
     }
   })
