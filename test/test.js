@@ -98,9 +98,13 @@ test('event handlers', (t) => {
       close()
     }
   })
-  events.forEach((e) => client.append(e, { retry: true }, (err, data) => {
+
+  client.append(events[0], { retry: true }, (err) => {
     if (err) return t.fail(`failed to append event ${err}`)
-  }))
+    client.append(events[1], { retry: true }, (err) => {
+      if (err) return t.fail(`failed to append event ${err}`)
+    })
+  })
 })
 
 test('generator event handlers', (t) => {
