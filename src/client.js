@@ -3,9 +3,12 @@ const Logs = require('./logs')
 const fetch = require('make-fetch-happen')
 const validateEvent = require('./validate-event')
 const eventHandler = require('./event-handler')
+const Streams = require('./streams')
+const through = require('through2')
+const pump = require('pump')
 
 module.exports = ({ wsUrl, httpUrl }) => {
-  return { append, handleEvents }
+  return { append, handleEvents, streamById }
 
   function append (event, options, cb) {
     if (typeof options === 'function') {
@@ -29,6 +32,17 @@ module.exports = ({ wsUrl, httpUrl }) => {
     })
     .then((json) => cb(null, json))
     .catch(cb)
+  }
+
+  function streamById (log, id, cb) {
+    const client = Client({ url: wsUrl })
+    const stream = Streams(client.db)
+    const logs = Logs(client.db)
+    const rs = stream.createReadStream(id)
+    const map = through.obj((data, enc, cb) => {
+      logs.get(log, data.value, cb)
+    })
+    return pump(rs, map, cb)
   }
 
   function handleEvents ({ log, since, onError, updateSince }) {
