@@ -23,8 +23,8 @@ docker pull jameskyburz/level-eventstore:v1.0.0
 # Running in docker
 
 ```
-ᐅ docker pull jameskyburz/level-eventstore:v1.0.0
-ᐅ docker run --rm --name level-eventstore -p 5000:5000 jameskyburz/level-eventstore:v1.0.0
+ᐅ docker pull jameskyburz/level-eventstore:v3.1.3
+ᐅ docker run --rm --name level-eventstore -p 5000:5000 jameskyburz/level-eventstore:v3.1.3
 ```
 
 # example
