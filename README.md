@@ -4,7 +4,9 @@ eventstore using leveldb
 
 [![js-standard-style](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/feross/standard)
 [![build status](https://api.travis-ci.org/JamesKyburz/level-eventstore.svg)](https://travis-ci.org/JamesKyburz/level-eventstore)
+[![Docker Build Statu](https://img.shields.io/docker/build/jameskyburz/level-eventstore.svg)]()
 [![downloads](https://img.shields.io/npm/dm/level-eventstore.svg)](https://npmjs.org/package/level-eventstore)
+[![Docker Pulls](https://img.shields.io/docker/pulls/jameskyburz/level-eventstore.svg)]()
 [![Known Vulnerabilities](https://snyk.io/test/github/jameskyburz/level-eventstore/badge.svg)](https://snyk.io/test/github/jameskyburz/level-eventstore)
 
 # server
