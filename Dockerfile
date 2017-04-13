@@ -1,4 +1,4 @@
-from jameskyburz/server-base:6.9-alpine-yarn
+from jameskyburz/server-base:7.9-alpine-yarn
 
 maintainer James Kyburz "james.kyburz@gmail.com"
 
