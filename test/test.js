@@ -127,6 +127,31 @@ test('generator event handlers', (t) => {
   })
 })
 
+test('streamById', (t) => {
+  let count = 0
+  const actual = []
+  const expected = [
+    {
+      type: 'signup',
+      payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
+      createdAt: 0
+    }, {
+      type: 'verifyAccount',
+      payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
+      createdAt: 0
+    }
+  ]
+  client.streamById('users', 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543', (err) => {
+    t.error(err)
+    t.deepEqual(expected, actual, 'correct stream data')
+    t.end()
+  })
+  .on('data', (data) => {
+    expected[count++].createdAt = data.createdAt
+    actual.push(data)
+  })
+})
+
 test('cleanup', (t) => {
   if (server) server.kill()
   t.end()
