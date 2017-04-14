@@ -8,7 +8,7 @@ const through = require('through2')
 const pump = require('pump')
 
 module.exports = ({ wsUrl, httpUrl }) => {
-  return { append, handleEvents, streamById }
+  return { append, handleEvents, streamById, logStream }
 
   function append (event, options, cb) {
     if (typeof options === 'function') {
@@ -32,6 +32,12 @@ module.exports = ({ wsUrl, httpUrl }) => {
     })
     .then((json) => cb(null, json))
     .catch(cb)
+  }
+
+  function logStream (log, opts) {
+    const client = Client({ url: wsUrl })
+    const logs = Logs(client.db)
+    return logs.createReadStream(log, opts)
   }
 
   function streamById (log, id, cb) {

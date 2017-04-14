@@ -152,6 +152,28 @@ test('streamById', (t) => {
   })
 })
 
+test('logStream', (t) => {
+  t.plan(1)
+  const expected = {
+    log: 'users',
+    seq: 1,
+    value: {
+      type: 'signup',
+      payload: {
+        email: 'foo@bar.com',
+        id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
+      },
+      createdAt: 1492177730433
+    }
+  }
+
+  client.logStream('users', { since: 0, until : 2})
+  .on('data', (actual) => {
+    expected.value.createdAt = actual.value.createdAt
+    t.deepEqual(expected, actual, 'correct logStream data')
+  })
+})
+
 test('cleanup', (t) => {
   if (server) server.kill()
   t.end()
