@@ -174,6 +174,15 @@ test('logStream', (t) => {
   })
 })
 
+test('logList', (t) => {
+  t.plan(2)
+  const expected = ['users', 'x']
+  client.logList((err, actual) => {
+    t.error(err, 'log list had no error')
+    t.deepEqual(expected, actual, 'logList returned correct data')
+  })
+})
+
 test('cleanup', (t) => {
   if (server) server.kill()
   t.end()
