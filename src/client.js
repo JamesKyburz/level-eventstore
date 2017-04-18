@@ -40,10 +40,12 @@ module.exports = ({ wsUrl, httpUrl }) => {
     return logs.list(cb)
   }
 
-  function logStream (log, opts) {
+  function logStream (log, opts, cb) {
     const client = Client({ url: wsUrl })
     const logs = Logs(client.db)
     return logs.createReadStream(log, opts)
+    .on('error', cb)
+    .on('end', cb)
   }
 
   function streamById (log, id, cb) {
