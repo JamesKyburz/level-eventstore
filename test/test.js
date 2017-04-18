@@ -153,7 +153,7 @@ test('streamById', (t) => {
 })
 
 test('logStream', (t) => {
-  t.plan(1)
+  t.plan(2)
   const expected = {
     log: 'users',
     seq: 1,
@@ -167,7 +167,9 @@ test('logStream', (t) => {
     }
   }
 
-  client.logStream('users', { since: 0, until : 2})
+  client.logStream('users', { since: 0, until: 2 }, (err) => {
+    t.error(err, 'no error')
+  })
   .on('data', (actual) => {
     expected.value.createdAt = actual.value.createdAt
     t.deepEqual(expected, actual, 'correct logStream data')
