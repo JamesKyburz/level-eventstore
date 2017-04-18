@@ -132,22 +132,28 @@ test('streamById', (t) => {
   const actual = []
   const expected = [
     {
-      type: 'signup',
-      payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
-      createdAt: 0
+      seq: 1,
+      value: {
+        type: 'signup',
+        payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
+        createdAt: 0
+      }
     }, {
-      type: 'verifyAccount',
-      payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
-      createdAt: 0
+      seq: 2,
+      value: {
+        type: 'verifyAccount',
+        payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
+        createdAt: 0
+      }
     }
   ]
   client.streamById('users', 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543', (err) => {
-    t.error(err)
+    t.error(err, 'no error')
     t.deepEqual(expected, actual, 'correct stream data')
     t.end()
   })
   .on('data', (data) => {
-    expected[count++].createdAt = data.createdAt
+    expected[count++].value.createdAt = data.value.createdAt
     actual.push(data)
   })
 })
