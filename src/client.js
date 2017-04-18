@@ -54,7 +54,10 @@ module.exports = ({ wsUrl, httpUrl }) => {
     const logs = Logs(client.db)
     const rs = stream.createReadStream(id)
     const map = through.obj((data, enc, cb) => {
-      logs.get(log, data.value, cb)
+      logs.get(log, data.value, (err, value) => {
+        if (err) return cb(err)
+        cb(null, Object.assign({ seq: data.seq, value }))
+      })
     })
     return pump(rs, map, cb)
   }
