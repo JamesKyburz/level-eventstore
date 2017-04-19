@@ -52,11 +52,15 @@ module.exports = ({ wsUrl, httpUrl }) => {
     .on('end', cb)
   }
 
-  function streamById (log, id, cb) {
+  function streamById (log, id, opts, cb) {
+    if (typeof opts === 'function') {
+      cb = opts
+      opts = {}
+    }
     const client = Client({ url: wsUrl })
     const stream = Streams(client.db)
     const logs = Logs(client.db)
-    const rs = stream.createReadStream(id)
+    const rs = stream.createReadStream(id, opts)
     const map = through.obj((data, enc, cb) => {
       logs.get(log, data.value, (err, value) => {
         if (err) return cb(err)
