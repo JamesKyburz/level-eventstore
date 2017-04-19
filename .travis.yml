@@ -5,4 +5,4 @@ node_js:
   - "6.10"
   - "7"
 script:
-  - yarn test
+  - ./node_modules/.bin/lerna exec yarn install && ./node_modules/.bin/lerna run test

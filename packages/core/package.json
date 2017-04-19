@@ -1,0 +1,49 @@
+{
+  "name": "level-eventstore",
+  "version": "5.1.1",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JamesKyburz/level-eventstore.git"
+  },
+  "scripts": {
+    "start": "node src/index",
+    "lint": "standard",
+    "test": "tape test/* | faucet",
+    "missing": "dependency-sync --once"
+  },
+  "dependencies": {
+    "is-generator-function": "1.0.6",
+    "level-create-batch": "1.1.0",
+    "level-logs": "1.1.2",
+    "leveldb-mount": "4.0.15",
+    "make-fetch-happen": "1.5.0",
+    "once": "1.4.0",
+    "pump": "1.0.2",
+    "run-duck-run": "2.0.1",
+    "server-base": "4.0.23",
+    "through2": "2.0.3",
+    "uuid": "3.0.1"
+  },
+  "files": [
+    "src"
+  ],
+  "devDependencies": {
+    "dependency-sync": "2.0.24",
+    "faucet": "0.0.1",
+    "rimraf": "2.6.1",
+    "tape": "4.6.3"
+  },
+  "dependency-sync": {
+    "args": [
+      "src/index.js",
+      "--debug"
+    ],
+    "yarn": {
+      "args": [
+        "--exact"
+      ]
+    }
+  },
+  "license": "Apache-2.0"
+}

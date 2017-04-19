@@ -1,0 +1,52 @@
+{
+  "name": "ui",
+  "version": "0.1.0",
+  "dependencies": {
+    "aphrodite": "1.2.0",
+    "basscss": "8.0.3",
+    "es6-promise": "4.1.0",
+    "history": "4.6.1",
+    "isomorphic-fetch": "2.2.1",
+    "material-ui": "0.17.4",
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "react-github-fork-ribbon": "0.5.0",
+    "react-json-tree": "0.10.7",
+    "react-redux": "5.0.4",
+    "react-router": "4.1.1",
+    "react-router-dom": "4.1.1",
+    "react-tap-event-plugin": "2.0.1",
+    "redux": "3.6.0",
+    "redux-actions": "2.0.1",
+    "redux-devtools-extension": "2.13.0",
+    "redux-thunk": "2.2.0"
+  },
+  "devDependencies": {
+    "babelify": "7.3.0",
+    "dependency-sync": "2.0.23",
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && ./post-build",
+    "eject": "react-scripts eject",
+    "missing": "dependency-sync --once"
+  },
+  "dependency-sync": {
+    "args": [
+      "./src/index.js",
+      "-t",
+      "babelify",
+      "--debug"
+    ],
+    "keep": [
+      "basscss"
+    ],
+    "yarn": {
+      "args": [
+        "--exact"
+      ]
+    }
+  },
+  "private": true
+}
