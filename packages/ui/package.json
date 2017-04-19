@@ -2,7 +2,7 @@
   "name": "level-eventstore-ui",
   "version": "5.1.3",
   "scripts": {
-    "prestart": "cd ./src/ui && yarn build",
+    "prestart": "cd ./src/ui && yarn install && yarn build",
     "start": "node src/index",
     "missing": "dependency-sync --once"
   },
