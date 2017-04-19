@@ -41,6 +41,10 @@ module.exports = ({ wsUrl, httpUrl }) => {
   }
 
   function logStream (log, opts, cb) {
+    if (typeof opts === 'function') {
+      cb = opts
+      opts = {}
+    }
     const client = Client({ url: wsUrl })
     const logs = Logs(client.db)
     return logs.createReadStream(log, opts)
