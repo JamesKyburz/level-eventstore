@@ -39,7 +39,7 @@ export default handleActions({
   [setEvents]: (state, action) => {
      const seq = Math.max((state.events[0] || {}).seq || 0, state.since)
      const append = action.payload.filter((x) => x.seq > seq)
-     const events = state.events.concat(append).slice(-100)
+     const events = append.concat(state.events).slice(-100)
      return Object.assign({}, state, { events, stream: [] })
   }
 }, initialState)
