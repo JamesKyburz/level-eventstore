@@ -4,6 +4,8 @@ import { Home } from './home'
 import { Stream } from './stream'
 import GitHubForkRibbon from 'react-github-fork-ribbon'
 
+const baseUrl = process.env.REACT_APP_BASE_URL || ''
+
 export default () => (
   <div>
     <GitHubForkRibbon
@@ -14,7 +16,7 @@ export default () => (
     Fork me on GitHub
   </GitHubForkRibbon>
     <Switch>
-      <Route path='/stream/:log/:id' component={Stream} />
+      <Route path={baseUrl + '/stream/:log/:id'} component={Stream} />
       <Route component={Home} />
     </Switch>
   </div>

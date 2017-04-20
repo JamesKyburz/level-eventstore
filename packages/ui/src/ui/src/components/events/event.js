@@ -7,6 +7,8 @@ import { css } from 'aphrodite/no-important'
 import { NavLink } from 'react-router-dom'
 import style from './style'
 
+const baseUrl = process.env.REACT_APP_BASE_URL || ''
+
 const mapStateToProps = (state) => ({})
 const mapDispatchToProps =
   (dispatch) => ({ actions: bindActionCreators(actions, dispatch) })
@@ -28,11 +30,11 @@ export const Event = connect(
         </div>
         {props.streamId
         ? (
-          <NavLink className={css(style.button) + ' p2 border-left border-right m0'} to={'/'}>
+          <NavLink className={css(style.button) + ' p2 border-left border-right m0'} to={baseUrl + '/'}>
             Event <strong>→</strong>
           </NavLink>
         ) : (
-          <NavLink className={css(style.button) + ' p2 border-left border-right m0'} to={'/stream/' + props.log + '/' + props.value.payload.id}>
+          <NavLink className={css(style.button) + ' p2 border-left border-right m0'} to={baseUrl + '/stream/' + props.log + '/' + props.value.payload.id}>
             Follow stream <strong>→</strong>
           </NavLink>
         )}
