@@ -55,11 +55,11 @@ export const Events = connect(
         <div className='ml2 clearfix'>
           <div className='col-8 px2 mx-auto'>
             <div className='flex flex-wrap'>
-              <h1 className={css(style.title) + (props.streamId ? ' col-8' : ' col-4')} >
+              <h1 className={css(style.title) + (props.streamId ? ' col-12' : ' col-5')} >
                 {props.streamId ? 'Level EventStore Stream id ' + props.streamId : 'Level EventStore Events' }
               </h1>
-              {!props.streamId && <p className={css(style.title) + ' col-2 h5 p2'} >
-                Last 100 events
+              {!props.streamId && <p className={css(style.title) + ' col-1 h5 p2'} >
+                100 events
               </p>}
               {!props.streamId && <SelectField
                  floatingLabelFixed={true}
