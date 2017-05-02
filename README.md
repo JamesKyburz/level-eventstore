@@ -1,5 +1,7 @@
 # level-eventstore
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/JamesKyburz/level-eventstore.svg)](https://greenkeeper.io/)
+
 eventstore using leveldb
 
 [![js-standard-style](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/feross/standard)
