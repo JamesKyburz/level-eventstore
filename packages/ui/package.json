@@ -9,7 +9,7 @@
     "level-eventstore": "^5.1.10",
     "moment": "2.18.1",
     "serve": "5.1.4",
-    "server-base": "4.0.28"
+    "server-base": "4.1.0"
   },
   "devDependencies": {
     "dependency-sync": "2.0.23"
