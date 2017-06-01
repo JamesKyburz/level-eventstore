@@ -74,16 +74,32 @@ test('append with valid event', (t) => {
   })
 })
 
-test('event handlers', (t) => {
-  t.plan(1)
+test('insert users', (t) => {
+  t.plan(2)
   const events = [
     { type: 'signup', log: 'users', payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } },
     { type: 'verifyAccount', log: 'users', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } }
   ]
+  client.append(events[0], { retry: true }, (err) => {
+    t.error(err, `failed to append event ${err}`)
+    client.append(events[1], { retry: true }, (err) => {
+      t.error(err, `failed to append event ${err}`)
+    })
+  })
+})
+
+test('event handlers', (t) => {
+
+  t.plan(1)
   const state = {}
-  const close = client.handleEvents({ log: 'users', onError: (err) => console.error(err) })({
+  const fail = () => {
+    close()
+    t.fail()
+  }
+  const close = client.handleEvents({ log: 'users', onError: fail })({
     signup (payload, cb) {
       state[payload.id] = { email: payload.email }
+      // cb(new Error('lol'))
       cb(null)
     },
     verifyAccount (payload, cb) {
@@ -98,23 +114,44 @@ test('event handlers', (t) => {
       close()
     }
   })
-
-  client.append(events[0], { retry: true }, (err) => {
-    if (err) return t.fail(`failed to append event ${err}`)
-    client.append(events[1], { retry: true }, (err) => {
-      if (err) return t.fail(`failed to append event ${err}`)
-    })
-  })
 })
 
 test('generator event handlers', (t) => {
   t.plan(1)
   const state = {}
-  const close = client.handleEvents({ log: 'users' })({
+  const fail = () => {
+    close()
+    t.fail()
+  }
+  const close = client.handleEvents({ log: 'users', onError: fail })({
     * signup (payload) {
       state[payload.id] = { email: payload.email }
     },
     * verifyAccount (payload) {
+      state[payload.id].verified = true
+      t.deepEqual(state, {
+        'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
+          email: 'foo@bar.com',
+          verified: true
+        }
+      }, 'correct state created')
+      close()
+    }
+  })
+})
+
+test('async event handlers', (t) => {
+  t.plan(1)
+  const state = {}
+  const fail = () => {
+    close()
+    t.fail()
+  }
+  const close = client.handleEvents({ log: 'users', onError: fail })({
+    async signup (payload) {
+      state[payload.id] = { email: payload.email }
+    },
+    async verifyAccount (payload) {
       state[payload.id].verified = true
       t.deepEqual(state, {
         'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {

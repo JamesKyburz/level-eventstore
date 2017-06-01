@@ -2,14 +2,29 @@ const runGenerator = require('run-duck-run')
 const isGenerator = require('is-generator-function')
 const through = require('through2')
 const pump = require('pump')
+const callHandler = (fn, cb) => {
+  return (payload) => {
+    if (isGenerator(fn)) {
+      runGenerator(fn, cb)(payload)
+    } else {
+      const result = fn(payload, cb)
+      if (result && result.then) {
+        result
+          .then((data) => cb(null, data))
+          .catch(cb)
+      }
+    }
+  }
+}
 
-module.exports = ({ stream, since, log, onError, updateSince }) => {
+module.exports = ({ stream, since, log, onError, updateSince, close }) => {
   onError = onError || (f => f)
   updateSince = updateSince || ((seq, cb) => cb(null))
   return (handlers) => {
-    poll()
     let run = true
+    poll()
     function poll () {
+      if (!run) return
       const rs = stream(log, since)
       const handle = through.obj((data, enc, cb) => {
         const value = data.value
@@ -21,18 +36,10 @@ module.exports = ({ stream, since, log, onError, updateSince }) => {
         }
         const handled = (err) => {
           if (err) return cb(err)
-          if (isGenerator(updateSince)) {
-            runGenerator(updateSince, next)(data.seq)
-          } else {
-            updateSince(data.seq, next)
-          }
+          callHandler(updateSince, next)(data.seq)
         }
         if (handler) {
-          if (isGenerator(handler)) {
-            runGenerator(handler, handled)(value.payload)
-          } else {
-            handler(value.payload, handled)
-          }
+          callHandler(handler, handled)(value.payload)
         } else {
           handled(null)
         }
@@ -44,6 +51,6 @@ module.exports = ({ stream, since, log, onError, updateSince }) => {
       })
     }
 
-    return () => { run = false }
+    return () => { run = false; close() }
   }
 }

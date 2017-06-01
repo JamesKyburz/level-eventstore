@@ -18,6 +18,15 @@ npm start
 
 Docker images hosted at https://hub.docker.com/r/jameskyburz/level-eventstore/
 
+docker pull jameskyburz/level-eventstore:version
+
+# Running in docker
+
+```sh
+ᐅ docker pull jameskyburz/level-eventstore:version
+ᐅ docker run --rm --name level-eventstore -p 5000:5000 jameskyburz/level-eventstore:version
+```
+
 # example
 
 ```js
@@ -60,6 +69,8 @@ insert { email: 'foo@bar', id: '1def7ce5-9da4-40cc-8594-c739fad36a2b' }
 verify { id: '38390783-cd60-4190-8b94-a3d4ac24d653' }
 
 ```
+
+event handlers can also be generators or async functions, in this case they do not need a `callback` argument.
 
 # license
 
