@@ -16,7 +16,7 @@
     "is-generator-function": "1.0.6",
     "level-create-batch": "1.1.0",
     "level-logs": "1.1.2",
-    "leveldb-mount": "4.1.3",
+    "leveldb-mount": "4.1.4",
     "make-fetch-happen": "2.4.10",
     "once": "1.4.0",
     "pump": "1.0.2",
