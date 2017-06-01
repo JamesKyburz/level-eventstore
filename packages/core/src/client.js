@@ -16,17 +16,28 @@ module.exports = ({ wsUrl, httpUrl }) => {
       options = {}
     }
 
+    if (!cb) {
+      cb = (err, data) => {
+        if (err) return Promise.reject(err)
+        return data
+      }
+    }
+
     const error = validateEvent(event)
     if (error) return cb(error)
 
-    fetch(httpUrl + '/append', {
+    return fetch(httpUrl + '/append', {
       method: 'PUT',
       retry: options.retry,
       body: JSON.stringify(event)
     })
     .then((res) => {
       if (res.status !== 200) {
-        return cb(new Error({ status: res.status }))
+        if (cb) {
+          return cb(new Error({ status: res.status }))
+        } else {
+          return Promise.reject(new Error({ status: res.status }))
+        }
       }
       return res.json()
     })

@@ -75,17 +75,16 @@ test('append with valid event', (t) => {
 })
 
 test('insert users', (t) => {
-  t.plan(2)
   const events = [
     { type: 'signup', log: 'users', payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } },
     { type: 'verifyAccount', log: 'users', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } }
   ]
-  client.append(events[0], { retry: true }, (err) => {
-    t.error(err, `failed to append event ${err}`)
-    client.append(events[1], { retry: true }, (err) => {
-      t.error(err, `failed to append event ${err}`)
-    })
-  })
+
+  const pending = events.map((event) => client.append(event, { retry: true }))
+
+  Promise.all(pending)
+  .then(() => t.end())
+  .catch(t.fail)
 })
 
 test('event handlers', (t) => {
