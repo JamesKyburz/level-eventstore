@@ -10,7 +10,7 @@ eventstore using leveldb
 
 # server
 ```sh
-yarn start
+npm start
 ```
 
 ### Docker

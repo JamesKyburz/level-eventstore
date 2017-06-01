@@ -38,12 +38,7 @@
     "args": [
       "src/index.js",
       "--debug"
-    ],
-    "yarn": {
-      "args": [
-        "--exact"
-      ]
-    }
+    ]
   },
   "license": "Apache-2.0"
 }

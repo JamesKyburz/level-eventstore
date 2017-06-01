@@ -1,8 +1,12 @@
-from jameskyburz/server-base:7.9-alpine-yarn
+FROM jameskyburz/node:8.0.0-alpine
 
-maintainer James Kyburz "james.kyburz@gmail.com"
+MAINTAINER James Kyburz "james.kyburz@gmail.com"
 
-env SERVE_USER guest
-env SERVE_PASSWORD guest
+ENV SERVE_USER guest
+ENV SERVE_PASSWORD guest
 
-expose 5000
+RUN cd /usr/src/app/src/ui && npm install && npm run build
+
+USER node
+
+EXPOSE 5000

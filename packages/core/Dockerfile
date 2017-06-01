@@ -1,5 +1,5 @@
-from jameskyburz/server-base:7.9-alpine-yarn
+FROM jameskyburz/node:8.0.0-alpine
 
-maintainer James Kyburz "james.kyburz@gmail.com"
+MAINTAINER James Kyburz "james.kyburz@gmail.com"
 
-expose 5000
+EXPOSE 5000
