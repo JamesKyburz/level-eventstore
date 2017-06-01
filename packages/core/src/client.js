@@ -71,7 +71,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
     const client = Client({ url: wsUrl })
     const stream = Streams(client.db)
     const logs = Logs(client.db)
-    const rs = stream.createReadStream(id, opts)
+    const rs = stream.createReadStream(log + id, opts)
     const map = through.obj((data, enc, cb) => {
       logs.get(log, data.value, (err, value) => {
         if (err) return cb(err)
