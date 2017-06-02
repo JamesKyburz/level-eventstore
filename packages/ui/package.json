@@ -9,7 +9,7 @@
     "cookie-monster": "0.2.0",
     "level-eventstore": "^6.0.7",
     "moment": "2.18.1",
-    "serve": "5.1.5",
+    "serve": "5.2.1",
     "server-base": "4.1.0"
   },
   "devDependencies": {
