@@ -6,9 +6,10 @@
     "missing": "dependency-sync --once"
   },
   "dependencies": {
+    "cookie-monster": "0.2.0",
     "level-eventstore": "^6.0.4",
     "moment": "2.18.1",
-    "serve": "5.2.0",
+    "serve": "5.1.5",
     "server-base": "4.1.0"
   },
   "devDependencies": {
