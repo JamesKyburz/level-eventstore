@@ -33,11 +33,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
     })
     .then((res) => {
       if (res.status !== 200) {
-        if (cb) {
-          return cb(new Error({ status: res.status }))
-        } else {
-          return Promise.reject(new Error({ status: res.status }))
-        }
+        return cb(new Error({ status: res.status }))
       }
       return res.json()
     })
