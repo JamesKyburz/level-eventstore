@@ -98,7 +98,6 @@ test('event handlers', (t) => {
   const close = client.handleEvents({ log: 'users', onError: fail })({
     signup (payload, cb) {
       state[payload.id] = { email: payload.email }
-      // cb(new Error('lol'))
       cb(null)
     },
     verifyAccount (payload, cb) {
