@@ -61,6 +61,10 @@ service('level-eventstore-ui', (router, ctx) => {
   if (process.env.SERVE_USER) uiFlags.auth = true
   ctx.use((req, res, next) => {
     if (router.get(req.url).handler) return next()
+    const cookieValue = encodeURIComponent(process.env.REACT_APP_BASE_URL)
+    const cookieName = 'LEVEL_EVENTSTORE_UI_REACT_APP_BASE_URL'
+    const cookie = `${cookieName}=${cookieValue}; Path=/;`
+    res.setHeader('Set-Cookie', cookie)
     serve(req, res, uiFlags, uiPath, uiIgnored)
   })
 }).start(5000)
