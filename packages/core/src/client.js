@@ -16,6 +16,10 @@ module.exports = ({ wsUrl, httpUrl }) => {
       options = {}
     }
 
+    options = Object.assign({}, options)
+
+    if (!options) options = {}
+
     if (!cb) {
       cb = (err, data) => {
         if (err) return Promise.reject(err)

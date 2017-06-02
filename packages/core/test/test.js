@@ -87,6 +87,13 @@ test('insert users', (t) => {
   .catch(t.fail)
 })
 
+test('regression testing client.append missing options', (t) => {
+  const event = { type: 'x', log: 'x', payload: { foo: 'bar' } }
+  client.append(event)
+  .then(() => t.end())
+  .catch(() => t.fail)
+})
+
 test('event handlers', (t) => {
 
   t.plan(1)
