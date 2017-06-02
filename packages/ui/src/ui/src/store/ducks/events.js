@@ -13,34 +13,34 @@ const initialState = { logList: [], events: [], streams: [], since: 0, logType: 
 
 export default handleActions({
   [setSince]: (state, action) => {
-   return Object.assign({}, state, { since: action.payload, events: [] })
+    return Object.assign({}, state, { since: action.payload, events: [] })
   },
   [setError]: (state, action) => {
-   return Object.assign({}, state, { error: action.payload })
+    return Object.assign({}, state, { error: action.payload })
   },
   [clearStreams]: (state, action) => {
-     return Object.assign({}, state, { streams: [] })
+    return Object.assign({}, state, { streams: [] })
   },
   [setStreams]: (state, action) => {
-     const seq = (state.streams.slice(-1)[0] || {}).seq || 0
-     const append = action.payload.filter((x) => x.seq > seq)
-     const streams = state.streams.concat(append)
-     return Object.assign({}, state, { streams })
+    const seq = (state.streams.slice(-1)[0] || {}).seq || 0
+    const append = action.payload.filter((x) => x.seq > seq)
+    const streams = state.streams.concat(append)
+    return Object.assign({}, state, { streams })
   },
   [setLogList]: (state, action) => {
-     return Object.assign({}, state, { logList: action.payload })
+    return Object.assign({}, state, { logList: action.payload })
   },
   [setLogType]: (state, action) => {
-     return Object.assign({}, state, { logType: action.payload, events: [], streams: [] })
+    return Object.assign({}, state, { logType: action.payload, events: [], streams: [] })
   },
   [clearEvents]: (state, action) => {
-     return Object.assign({}, state, { events: [] })
+    return Object.assign({}, state, { events: [] })
   },
   [setEvents]: (state, action) => {
-     const seq = Math.max((state.events[0] || {}).seq || 0, state.since)
-     const append = action.payload.filter((x) => x.seq > seq)
-     const events = append.concat(state.events).slice(-100)
-     return Object.assign({}, state, { events, stream: [] })
+    const seq = Math.max((state.events[0] || {}).seq || 0, state.since)
+    const append = action.payload.filter((x) => x.seq > seq)
+    const events = append.concat(state.events).slice(-100)
+    return Object.assign({}, state, { events, stream: [] })
   }
 }, initialState)
 
@@ -79,7 +79,6 @@ export const updateLogType = (type) => {
     .catch((err) => dispatch(setError(err)))
   }
 }
-
 
 export const streamById = (log, id, since) => {
   return (dispatch, getState, api) => {

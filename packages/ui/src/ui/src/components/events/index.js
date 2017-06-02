@@ -62,16 +62,16 @@ export const Events = connect(
                 100 events
               </p>}
               {!props.streamId && <SelectField
-                 floatingLabelFixed={true}
-                 value={props.logType}
-                 onChange={(event, index, value) => props.actions.updateLogType(value)}
-                 floatingLabelText='Log type?'
-                 className='col-4'>
-                 {props.logList.map((type, i) => <MenuItem key={i} primaryText={type} value={type} />)}
+                floatingLabelFixed
+                value={props.logType}
+                onChange={(event, index, value) => props.actions.updateLogType(value)}
+                floatingLabelText='Log type?'
+                className='col-4'>
+                {props.logList.map((type, i) => <MenuItem key={i} primaryText={type} value={type} />)}
               </SelectField>}
               {!props.streamId && <div className='col-2 mx-auto'>
                 <TextField
-                  floatingLabelFixed={true}
+                  floatingLabelFixed
                   onChange={(event, value) => props.actions.updateSince(value)}
                   floatingLabelText='> sequence?'
                   className='ml2'
@@ -83,7 +83,7 @@ export const Events = connect(
         <div className='clearfix m0'>
           <div className='col-8 border-bottom mx-auto m0'>
             <div className='flex flex-wrap m0'>
-              <p className='col-2 p2 m0' style={{color: '#2BD4EE' }}><strong>Event</strong></p>
+              <p className='col-2 p2 m0' style={{color: '#2BD4EE'}}><strong>Event</strong></p>
               <p className='border-left col-1 p2 m0 ml2'><strong>Sequence</strong></p>
               <p className='border-left col-2 p2 m0 ml2'><strong>Created</strong></p>
               <p className='border-left col-3 p2 m0 ml2'><strong>Payload</strong></p>
@@ -98,4 +98,3 @@ export const Events = connect(
     )
   }
 })
-

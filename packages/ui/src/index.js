@@ -1,7 +1,7 @@
 const service = require('server-base')
 const path = require('path')
 const serve = require('serve/lib/server')
-const moment = require('moment')
+const Moment = require('moment')
 
 const client = require('level-eventstore').client({
   wsUrl: process.env.EVENTSTORE_URL || 'ws://guest:guest@eventstore:5000'
@@ -29,7 +29,7 @@ service('level-eventstore-ui', (router, ctx) => {
         res.end()
       })
       stream.on('data', (data) => {
-        data.value.createdAt = new moment(data.value.createdAt).fromNow()
+        data.value.createdAt = new Moment(data.value.createdAt).fromNow()
         rows.push(data)
       })
     }
@@ -47,13 +47,12 @@ service('level-eventstore-ui', (router, ctx) => {
         res.end()
       })
       stream.on('data', (data) => {
-        data.value.createdAt = new moment(data.value.createdAt).fromNow()
+        data.value.createdAt = new Moment(data.value.createdAt).fromNow()
         rows.push(data)
       })
     }
   })
 
-  const uiIgnoredFiles = [ '.DS_Store', '.git/', 'node_modules' ]
   const uiIgnored = [ '.DS_Store', '.git/', 'node_modules' ]
   const uiPath = path.join(__dirname, 'ui/build/')
   process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
