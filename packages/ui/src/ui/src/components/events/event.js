@@ -6,8 +6,7 @@ import * as actions from '../../store/ducks/events'
 import { css } from 'aphrodite/no-important'
 import { NavLink } from 'react-router-dom'
 import style from './style'
-
-const baseUrl = process.env.REACT_APP_BASE_URL || ''
+import baseUrl from '../../base-url'
 
 const mapStateToProps = (state) => ({})
 const mapDispatchToProps =

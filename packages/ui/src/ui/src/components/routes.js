@@ -3,8 +3,7 @@ import { Switch, Route } from 'react-router'
 import { Home } from './home'
 import { Stream } from './stream'
 import GitHubForkRibbon from 'react-github-fork-ribbon'
-
-const baseUrl = process.env.REACT_APP_BASE_URL || ''
+import baseUrl from '../base-url'
 
 export default () => (
   <div>

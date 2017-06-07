@@ -1,7 +1,5 @@
 import fetch from './fetch'
-import cookie from 'cookie-monster'
-
-const baseUrl = cookie.get('LEVEL_EVENTSTORE_UI_REACT_APP_BASE_URL') || ''
+import baseUrl from '../base-url'
 
 export default () => {
   const get = (url) => fetch(baseUrl + url, {
