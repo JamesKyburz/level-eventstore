@@ -18,7 +18,7 @@
     "level-logs": "1.1.2",
     "leveldb-mount": "4.1.4",
     "leveldown": "1.7.0",
-    "make-fetch-happen": "2.4.10",
+    "make-fetch-happen": "2.4.12",
     "once": "1.4.0",
     "pump": "1.0.2",
     "run-duck-run": "2.0.2",
