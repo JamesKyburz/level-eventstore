@@ -95,7 +95,6 @@ test('regression testing client.append missing options', (t) => {
 })
 
 test('event handlers', (t) => {
-
   t.plan(1)
   const state = {}
   const fail = () => {
