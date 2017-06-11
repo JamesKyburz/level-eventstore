@@ -10,7 +10,7 @@
     "moment": "2.18.1",
     "serv": "0.2.4",
     "serve": "5.2.1",
-    "server-base": "4.5.0"
+    "server-base": "4.6.2"
   },
   "devDependencies": {
     "dependency-sync": "2.1.0"
