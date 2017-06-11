@@ -30,7 +30,7 @@
     "src"
   ],
   "devDependencies": {
-    "dependency-sync": "2.0.24",
+    "dependency-sync": "2.1.0",
     "faucet": "0.0.1",
     "rimraf": "2.6.1",
     "tape": "4.6.3"
