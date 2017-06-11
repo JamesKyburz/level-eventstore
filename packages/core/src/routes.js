@@ -10,7 +10,7 @@ module.exports = routes
 function routes ({ sequences, credentials }, router, context) {
   context.use((req, res, next) => {
     if (req.headers.authorization) {
-      const auth = new Buffer(req.headers.authorization.slice(6), 'base64').toString()
+      const auth = Buffer.from(req.headers.authorization.slice(6), 'base64').toString()
       if (auth === credentials) return next()
     }
     res.writeHead(401, { 'WWW-Authenticate': 'Basic' })
