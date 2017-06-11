@@ -9,7 +9,7 @@ level-eventstore web ui
 
 # server
 ```sh
-yarn start
+npm start
 ```
 
 # Docker
