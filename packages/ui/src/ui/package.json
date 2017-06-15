@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && ./post-build",
+    "build": "react-scripts build",
     "eject": "react-scripts eject",
     "missing": "dependency-sync --once"
   },

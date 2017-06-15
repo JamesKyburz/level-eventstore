@@ -1,29 +1,16 @@
 const service = require('server-base')
-const path = require('path')
-const serve = require('serve/lib/server')
+const serve = require('serve-create-react-app')('LEVEL_EVENTSTORE_UI_REACT_APP_BASE_URL')
 const Moment = require('moment')
 
 const client = require('level-eventstore').client({
   wsUrl: process.env.EVENTSTORE_URL || 'ws://guest:guest@eventstore:5000'
 })
 
-const uiIgnored = [ '.DS_Store', '.git/', 'node_modules' ]
-const uiPath = path.join(__dirname, 'ui/build/')
-const uiFlags = { single: true, auth: !!process.env.SERVE_USER }
-
-process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
-
 service('level-eventstore-ui', {
   '@setup': (ctx, router) => {
     ctx.use((req, res, next) => {
       if (router.get(req.url).handler) return next()
-      if (req.url.match(/css$/i)) req.url = req.url.match(/\/css\/.*/i)[0]
-      if (req.url.match(/js$/i)) req.url = req.url.match(/\/static\/js.*/i)[0]
-      const cookieValue = encodeURIComponent(process.env.REACT_APP_BASE_URL)
-      const cookieName = 'LEVEL_EVENTSTORE_UI_REACT_APP_BASE_URL'
-      const cookie = `${cookieName}=${cookieValue}; Path=/;`
-      res.setHeader('Set-Cookie', cookie)
-      serve(req, res, uiFlags, uiPath, uiIgnored)
+      serve(req, res)
     })
   },
   '/api/logList': {
