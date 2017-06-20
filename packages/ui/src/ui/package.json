@@ -22,6 +22,7 @@
     "redux-devtools-extension": "2.13.0",
     "redux-thunk": "2.2.0"
   },
+  "homepage": ".",
   "devDependencies": {
     "babelify": "7.3.0",
     "dependency-sync": "2.0.23",
