@@ -12,6 +12,7 @@ service('level-eventstore-ui', {
       if (router.get(req.url).handler) return next()
       serve(req, res)
     })
+    serve.buildRelativePaths()
   },
   '/api/logList': {
     * get (req, res) {
@@ -56,4 +57,4 @@ service('level-eventstore-ui', {
       })
     }
   }
-}).start(5000)
+}).start()
