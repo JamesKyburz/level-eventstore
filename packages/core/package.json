@@ -22,7 +22,7 @@
     "once": "1.4.0",
     "pump": "1.0.2",
     "run-duck-run": "2.0.2",
-    "server-base": "4.6.2",
+    "server-base": "4.9.0",
     "through2": "2.0.3",
     "uuid": "3.0.1"
   },
