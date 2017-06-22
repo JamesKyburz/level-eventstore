@@ -11,4 +11,7 @@ RUN ./node_modules/.bin/serve-create-react-app
 
 USER node
 
+ENTRYPOINT ["node", "src/index"]
+CMD []
+
 EXPOSE 5000
