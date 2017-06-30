@@ -15,7 +15,7 @@
   "dependencies": {
     "is-generator-function": "1.0.6",
     "level-create-batch": "1.1.0",
-    "level-logs": "1.1.2",
+    "level-logs": "1.2.0",
     "leveldb-mount": "4.1.4",
     "leveldown": "1.7.0",
     "make-fetch-happen": "2.4.12",

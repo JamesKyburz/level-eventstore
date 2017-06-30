@@ -22,14 +22,12 @@ service('level-eventstore-ui', {
   },
   '/api/logStream/:log/:since': {
     get (req, res, params) {
-      params.log = params.log || ''
-      params.since = +params.since || 0
+      params.log = decodeURIComponent(params.log || '')
+      const reverse = +params.since === -1
+      const since = +params.since === -1 ? 0 : +params.since
+      const limit = 100
       const rows = []
-      const stream = client.logStream(params.log, {
-        since: +params.since,
-        reverse: true,
-        limit: 100
-      }, (err) => {
+      const stream = client.logStream(params.log, { since, reverse, limit }, (err) => {
         if (err) return res.error(err)
         res.json(rows)
         res.end()
@@ -42,8 +40,8 @@ service('level-eventstore-ui', {
   },
   '/api/streamById/:log/:id/:since': {
     get (req, res, params) {
-      params.log = params.log || ''
-      params.id = params.id || ''
+      params.log = decodeURIComponent(params.log || '')
+      params.id = decodeURIComponent(params.id || '')
       params.since = +params.since || 0
       const rows = []
       const stream = client.streamById(params.log, params.id, { since: params.since }, (err) => {

@@ -9,7 +9,7 @@ export const clearEvents = createAction('event clear events')
 export const setLogType = createAction('event set log type')
 export const setError = createAction('set event error')
 
-const initialState = { logList: [], events: [], streams: [], since: 0, logType: '' }
+const initialState = { logList: [], events: [], streams: [], since: '', logType: '' }
 
 export default handleActions({
   [setSince]: (state, action) => {
@@ -40,6 +40,10 @@ export default handleActions({
     const seq = Math.max((state.events[0] || {}).seq || 0, state.since)
     const append = action.payload.filter((x) => x.seq > seq)
     const events = append.concat(state.events).slice(-100)
+    if (state.since !== '') {
+      events.sort((a, b) => b.seq - a.seq)
+    }
+
     return Object.assign({}, state, { events, stream: [] })
   }
 }, initialState)
@@ -47,7 +51,7 @@ export default handleActions({
 export const logStream = (log, since) => {
   return (dispatch, getState, api) => {
     log = log || getState().events.logType
-    since = since || getState().events.since || 0
+    since = since || getState().events.since || -1
     return api.logStream(log, since)
     .then((res) => res.json())
     .then((json) => dispatch(setEvents(json)))
