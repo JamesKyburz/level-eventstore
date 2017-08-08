@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node src/index",
     "lint": "standard",
-    "test": "tape test/* | faucet",
+    "test": "tape test/*.js | faucet",
     "missing": "dependency-sync --once"
   },
   "dependencies": {
