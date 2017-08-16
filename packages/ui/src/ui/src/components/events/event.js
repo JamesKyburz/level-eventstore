@@ -33,7 +33,7 @@ export const Event = connect(
             Event <strong>→</strong>
           </NavLink>
         ) : (
-          <NavLink className={css(style.button) + ' p2 border-left border-right m0'} to={baseUrl + '/stream/' + props.log + '/' + props.value.payload.id}>
+          <NavLink className={css(style.button) + ' p2 border-left border-right m0'} to={baseUrl + '/stream/' + props.log + '/' + encodeURIComponent(props.value.payload.id)}>
             Follow stream <strong>→</strong>
           </NavLink>
         )}
