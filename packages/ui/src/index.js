@@ -7,12 +7,12 @@ const client = require('level-eventstore').client({
 })
 
 service('level-eventstore-ui', {
-  '@setup': (ctx, router) => {
+  '@setup': async (ctx, router) => {
     ctx.use((req, res, next) => {
       if (router.get(req.url).handler) return next()
       serve(req, res)
     })
-    serve.buildRelativePaths()
+    await serve.buildRelativePaths()
   },
   '/api/logList': {
     * get (req, res) {
