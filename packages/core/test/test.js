@@ -87,6 +87,31 @@ test('insert users', (t) => {
   .catch(t.fail)
 })
 
+test('insert duplicate fails', (t) => {
+  t.plan(1)
+
+  const events = [
+    { type: 'create', log: 'things', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } },
+    { type: 'create', log: 'things', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } }
+  ]
+
+  for (const event of events) {
+    client.append(event, { retry: false }, done)
+  }
+
+  function done (err) {
+    if (err) {
+      t.equals(err.message, 'key is write-locked')
+    }
+  }
+
+  const pending = events.map((event) => client.append(event, { retry: true }))
+
+  Promise.all(pending)
+  .then(() => t.end())
+  .catch(t.fail)
+})
+
 test('regression testing client.append missing options', (t) => {
   const event = { type: 'x', log: 'x', payload: { foo: 'bar' } }
   client.append(event)
@@ -225,7 +250,7 @@ test('logStream', (t) => {
 
 test('logList', (t) => {
   t.plan(2)
-  const expected = ['users', 'x']
+  const expected = ['things', 'users', 'x']
   client.logList((err, actual) => {
     t.error(err, 'log list had no error')
     t.deepEqual(expected, actual, 'logList returned correct data')

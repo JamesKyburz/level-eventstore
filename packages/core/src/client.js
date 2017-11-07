@@ -35,14 +35,18 @@ module.exports = ({ wsUrl, httpUrl }) => {
       retry: options.retry,
       body: JSON.stringify(event)
     })
-    .then((res) => {
-      if (res.status !== 200) {
-        return cb(new Error({ status: res.status }))
-      }
-      return res.json()
-    })
-    .then((json) => cb(null, json))
-    .catch(cb)
+      .then(res => {
+        if (res.status !== 200) {
+          return res
+            .text()
+            .then(message =>
+              Promise.reject(new Error(message))
+            )
+        }
+        return res.json()
+      })
+      .then(json => cb(null, json))
+      .catch(cb)
   }
 
   function logList (cb) {
@@ -58,9 +62,10 @@ module.exports = ({ wsUrl, httpUrl }) => {
     }
     const client = Client({ url: wsUrl })
     const logs = Logs(client.db)
-    return logs.createReadStream(log, opts)
-    .on('error', cb)
-    .on('end', cb)
+    return logs
+      .createReadStream(log, opts)
+      .on('error', cb)
+      .on('end', cb)
   }
 
   function streamById (log, id, opts, cb) {
@@ -86,7 +91,9 @@ module.exports = ({ wsUrl, httpUrl }) => {
     const logs = Logs(client.db)
     const close = () => client.close()
     return eventHandler({
-      stream (log, since) { return logs.createReadStream(log, { since }) },
+      stream (log, since) {
+        return logs.createReadStream(log, { since })
+      },
       since,
       log,
       onError,
