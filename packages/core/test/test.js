@@ -12,87 +12,112 @@ const path = require('path')
 
 let server
 
-test('start server', (t) => {
-  rimraf(path.join(__dirname, '../eventstore'), (err) => {
+test('start server', t => {
+  rimraf(path.join(__dirname, '../eventstore'), err => {
     t.error(err, 'remove eventstore')
-    server = spawn('node', [ path.join(__dirname, '../src/server') ])
+    server = spawn('node', [path.join(__dirname, '../src/server')])
     process.on('exit', server.kill.bind(server))
     ;(function ping () {
-      const request = http.get('http://guest:guest@localhost:5000/ping', (res) => {
-        if (res.statusCode === 200) return t.end()
-        setTimeout(ping, 300)
-      })
+      const request = http.get(
+        'http://guest:guest@localhost:5000/ping',
+        res => {
+          if (res.statusCode === 200) return t.end()
+          setTimeout(ping, 300)
+        }
+      )
       request.on('error', setTimeout.bind(null, ping, 300))
     })()
   })
 })
 
-test('event is mandatory', (t) => {
+test('event is mandatory', t => {
   t.plan(1)
-  client.append(null, (err) => {
+  client.append(null, err => {
     t.equals(err.message, 'event must be specified')
   })
 })
 
-test('event type mandatory', (t) => {
+test('event type mandatory', t => {
   t.plan(1)
   const event = validEvent()
   delete event.type
-  client.append(event, (err) => {
+  client.append(event, err => {
     t.equals(err.message, 'event type must be specified')
   })
 })
 
-test('event log mandatory', (t) => {
+test('event log mandatory', t => {
   t.plan(1)
   const event = validEvent()
   delete event.log
-  client.append(event, (err) => {
+  client.append(event, err => {
     t.equals(err.message, 'event log must be specified')
   })
 })
 
-test('event payload mandatory', (t) => {
+test('event payload mandatory', t => {
   t.plan(1)
   const event = validEvent()
   delete event.payload
-  client.append(event, (err) => {
+  client.append(event, err => {
     t.equals(err.message, 'event payload must be specified')
   })
 })
 
-test('append with valid event', (t) => {
+test('append with valid event', t => {
   t.plan(1)
-  client.append({
-    type: 'x',
-    log: 'x',
-    payload: {
-      foo: 'bar'
+  client.append(
+    {
+      type: 'x',
+      log: 'x',
+      payload: {
+        foo: 'bar'
+      }
+    },
+    err => {
+      t.error(err, 'event saved')
     }
-  }, (err) => {
-    t.error(err, 'event saved')
-  })
+  )
 })
 
-test('insert users', (t) => {
+test('insert users', t => {
   const events = [
-    { type: 'signup', log: 'users', payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } },
-    { type: 'verifyAccount', log: 'users', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } }
+    {
+      type: 'signup',
+      log: 'users',
+      payload: {
+        email: 'foo@bar.com',
+        id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
+      }
+    },
+    {
+      type: 'verifyAccount',
+      log: 'users',
+      payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' }
+    }
   ]
 
-  const pending = events.map((event) => client.append(event, { retry: true }))
+  const pending = events.map(event => client.append(event, { retry: true }))
 
   Promise.all(pending)
-  .then(() => t.end())
-  .catch(t.fail)
+    .then(() => t.end())
+    .catch(t.fail)
 })
 
-test('insert duplicate fails', (t) => {
+test('insert duplicate fails', t => {
   t.plan(1)
 
   const events = [
-    { type: 'create', log: 'things', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } },
-    { type: 'create', log: 'things', payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' } }
+    {
+      type: 'create',
+      log: 'things',
+      payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' }
+    },
+    {
+      type: 'create',
+      log: 'things',
+      payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' }
+    }
   ]
 
   for (const event of events) {
@@ -105,21 +130,22 @@ test('insert duplicate fails', (t) => {
     }
   }
 
-  const pending = events.map((event) => client.append(event, { retry: true }))
+  const pending = events.map(event => client.append(event, { retry: true }))
 
   Promise.all(pending)
-  .then(() => t.end())
-  .catch(t.fail)
+    .then(() => t.end())
+    .catch(t.fail)
 })
 
-test('regression testing client.append missing options', (t) => {
+test('regression testing client.append missing options', t => {
   const event = { type: 'x', log: 'x', payload: { foo: 'bar' } }
-  client.append(event)
-  .then(() => t.end())
-  .catch(() => t.fail)
+  client
+    .append(event)
+    .then(() => t.end())
+    .catch(() => t.fail)
 })
 
-test('event handlers', (t) => {
+test('event handlers', t => {
   t.plan(1)
   const state = {}
   const fail = () => {
@@ -133,19 +159,23 @@ test('event handlers', (t) => {
     },
     verifyAccount (payload, cb) {
       state[payload.id].verified = true
-      t.deepEqual(state, {
-        'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
-          email: 'foo@bar.com',
-          verified: true
-        }
-      }, 'correct state created')
+      t.deepEqual(
+        state,
+        {
+          'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
+            email: 'foo@bar.com',
+            verified: true
+          }
+        },
+        'correct state created'
+      )
       cb(null)
       close()
     }
   })
 })
 
-test('generator event handlers', (t) => {
+test('generator event handlers', t => {
   t.plan(1)
   const state = {}
   const fail = () => {
@@ -158,18 +188,22 @@ test('generator event handlers', (t) => {
     },
     * verifyAccount (payload) {
       state[payload.id].verified = true
-      t.deepEqual(state, {
-        'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
-          email: 'foo@bar.com',
-          verified: true
-        }
-      }, 'correct state created')
+      t.deepEqual(
+        state,
+        {
+          'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
+            email: 'foo@bar.com',
+            verified: true
+          }
+        },
+        'correct state created'
+      )
       close()
     }
   })
 })
 
-test('async event handlers', (t) => {
+test('async event handlers', t => {
   t.plan(1)
   const state = {}
   const fail = () => {
@@ -182,18 +216,22 @@ test('async event handlers', (t) => {
     },
     async verifyAccount (payload) {
       state[payload.id].verified = true
-      t.deepEqual(state, {
-        'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
-          email: 'foo@bar.com',
-          verified: true
-        }
-      }, 'correct state created')
+      t.deepEqual(
+        state,
+        {
+          'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
+            email: 'foo@bar.com',
+            verified: true
+          }
+        },
+        'correct state created'
+      )
       close()
     }
   })
 })
 
-test('streamById', (t) => {
+test('streamById', t => {
   let count = 0
   const actual = []
   const expected = [
@@ -201,10 +239,14 @@ test('streamById', (t) => {
       seq: 1,
       value: {
         type: 'signup',
-        payload: { email: 'foo@bar.com', id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
+        payload: {
+          email: 'foo@bar.com',
+          id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
+        },
         createdAt: 0
       }
-    }, {
+    },
+    {
       seq: 2,
       value: {
         type: 'verifyAccount',
@@ -213,18 +255,19 @@ test('streamById', (t) => {
       }
     }
   ]
-  client.streamById('users', 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543', (err) => {
-    t.error(err, 'no error')
-    t.deepEqual(expected, actual, 'correct stream data')
-    t.end()
-  })
-  .on('data', (data) => {
-    expected[count++].value.createdAt = data.value.createdAt
-    actual.push(data)
-  })
+  client
+    .streamById('users', 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543', err => {
+      t.error(err, 'no error')
+      t.deepEqual(expected, actual, 'correct stream data')
+      t.end()
+    })
+    .on('data', data => {
+      expected[count++].value.createdAt = data.value.createdAt
+      actual.push(data)
+    })
 })
 
-test('logStream', (t) => {
+test('logStream', t => {
   t.plan(2)
   const expected = {
     log: 'users',
@@ -239,16 +282,17 @@ test('logStream', (t) => {
     }
   }
 
-  client.logStream('users', { since: 0, until: 2 }, (err) => {
-    t.error(err, 'no error')
-  })
-  .on('data', (actual) => {
-    expected.value.createdAt = actual.value.createdAt
-    t.deepEqual(expected, actual, 'correct logStream data')
-  })
+  client
+    .logStream('users', { since: 0, until: 2 }, err => {
+      t.error(err, 'no error')
+    })
+    .on('data', actual => {
+      expected.value.createdAt = actual.value.createdAt
+      t.deepEqual(expected, actual, 'correct logStream data')
+    })
 })
 
-test('logList', (t) => {
+test('logList', t => {
   t.plan(2)
   const expected = ['things', 'users', 'x']
   client.logList((err, actual) => {
@@ -257,7 +301,44 @@ test('logList', (t) => {
   })
 })
 
-test('cleanup', (t) => {
+test('wildcard event handler', t => {
+  t.plan(1)
+
+  const fail = () => {
+    close()
+    t.fail()
+  }
+
+  const state = []
+
+  const close = client.handleEvents({ log: 'users', onError: fail })({
+    async '*' ({ type, payload }) {
+      state.push({ type, payload })
+      if (state.length === 2) {
+        t.deepEqual(
+          state,
+          [
+            {
+              payload: {
+                email: 'foo@bar.com',
+                id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
+              },
+              type: 'signup'
+            },
+            {
+              payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
+              type: 'verifyAccount'
+            }
+          ],
+          'correct state created'
+        )
+      }
+      close()
+    }
+  })
+})
+
+test('cleanup', t => {
   if (server) server.kill()
   t.end()
   process.exit(0)
