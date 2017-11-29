@@ -1,6 +1,6 @@
 {
   "name": "level-eventstore",
-  "version": "7.0.27",
+  "version": "7.0.28",
   "main": "src/index.js",
   "repository": {
     "type": "git",
