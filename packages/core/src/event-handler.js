@@ -40,7 +40,11 @@ module.exports = ({ stream, since, log, onError, updateSince, close }) => {
         if (handler) {
           callHandler(handler, handled)(value.payload)
         } else if (wildcardHandler) {
-          callHandler(wildcardHandler, handled)(value)
+          callHandler(wildcardHandler, handled)({
+            payload: value.payload,
+            type: value.type,
+            seq: data.seq
+          })
         } else {
           handled(null)
         }
