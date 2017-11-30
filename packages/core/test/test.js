@@ -302,7 +302,7 @@ test('logList', t => {
 })
 
 test('wildcard event handler', t => {
-  t.plan(1)
+  t.plan(3)
 
   const fail = () => {
     close()
@@ -313,7 +313,8 @@ test('wildcard event handler', t => {
 
   const close = client.handleEvents({ log: 'users', onError: fail })({
     async '*' ({ type, payload, seq }) {
-      state.push({ type, payload, seq })
+      state.push({ type, payload })
+      t.ok(seq >= state.length, 'sequence')
       if (state.length === 2) {
         t.deepEqual(
           state,
@@ -323,13 +324,11 @@ test('wildcard event handler', t => {
                 email: 'foo@bar.com',
                 id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
               },
-              type: 'signup',
-              seq: 1
+              type: 'signup'
             },
             {
               payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
-              type: 'verifyAccount',
-              seq: 3
+              type: 'verifyAccount'
             }
           ],
           'correct state created'
