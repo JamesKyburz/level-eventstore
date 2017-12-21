@@ -1,6 +1,6 @@
-FROM jameskyburz/node:8.9.1-alpine
+FROM jameskyburz/node:8.9.3-alpine
 
-MAINTAINER James Kyburz "james.kyburz@gmail.com"
+LABEL maintainer="James Kyburz james.kyburz@gmail.com"
 
 ENV LOG_LEVEL warn
 
