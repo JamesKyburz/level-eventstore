@@ -26,7 +26,7 @@
   "devDependencies": {
     "babelify": "7.3.0",
     "dependency-sync": "2.0.23",
-    "react-scripts": "0.9.5"
+    "react-scripts": "1.0.17"
   },
   "scripts": {
     "start": "react-scripts start",
