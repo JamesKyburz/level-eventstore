@@ -1,0 +1,27 @@
+{
+  "name": "level-eventstore-client",
+  "version": "7.1.6",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JamesKyburz/level-eventstore.git"
+  },
+  "scripts": {
+    "missing": "npx dependency-sync --once --debug ./src/index.js"
+  },
+  "dependencies": {
+    "is-generator-function": "1.0.7",
+    "level-logs": "1.2.0",
+    "make-fetch-happen": "2.6.0",
+    "multileveldown": "2.3.0",
+    "pump": "2.0.1",
+    "run-duck-run": "2.0.2",
+    "through2": "2.0.3",
+    "websocket-stream": "5.1.1"
+  },
+  "files": [
+    "src"
+  ],
+  "devDependencies": {},
+  "license": "Apache-2.0"
+}

@@ -1,4 +1,4 @@
-const Client = require('leveldb-mount/client')
+const Client = require('./client')
 const Logs = require('./logs')
 const fetch = require('make-fetch-happen')
 const validateEvent = require('./validate-event')
@@ -37,11 +37,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
     })
       .then(res => {
         if (res.status !== 200) {
-          return res
-            .text()
-            .then(message =>
-              Promise.reject(new Error(message))
-            )
+          return res.text().then(message => Promise.reject(new Error(message)))
         }
         return res.json()
       })
@@ -83,7 +79,9 @@ module.exports = ({ wsUrl, httpUrl }) => {
         cb(null, Object.assign({ seq: data.seq, value }))
       })
     })
-    return pump(rs, map, cb)
+    const dest = through.obj()
+    process.nextTick(() => pump(rs, map, dest, cb))
+    return dest
   }
 
   function handleEvents ({ log, since, onError, updateSince }) {

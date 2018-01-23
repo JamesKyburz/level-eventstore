@@ -6,7 +6,7 @@
     "missing": "dependency-sync --once"
   },
   "dependencies": {
-    "level-eventstore": "7.1.6",
+    "level-eventstore-client": "7.1.6",
     "moment": "2.18.1",
     "serve-create-react-app": "4.1.6",
     "server-base": "4.10.0"

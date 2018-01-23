@@ -2,7 +2,7 @@ const service = require('server-base')
 const serve = require('serve-create-react-app')('LEVEL_EVENTSTORE_UI_REACT_APP_BASE_URL')
 const Moment = require('moment')
 
-const client = require('level-eventstore').client({
+const client = require('level-eventstore-client')({
   wsUrl: process.env.EVENTSTORE_URL || 'ws://guest:guest@eventstore:5000'
 })
 
