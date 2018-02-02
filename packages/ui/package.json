@@ -8,7 +8,7 @@
   "dependencies": {
     "level-eventstore-client": "7.1.8",
     "moment": "2.18.1",
-    "serve-create-react-app": "4.1.6",
+    "serve-create-react-app": "4.1.15",
     "server-base": "4.10.5"
   },
   "devDependencies": {
