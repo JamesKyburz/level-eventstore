@@ -8,9 +8,9 @@
   },
   "scripts": {
     "start": "node src/index",
-    "lint": "standard",
+    "lint": "npx standard",
     "test": "tape test/*.js | faucet",
-    "missing": "dependency-sync --once"
+    "missing": "npx dependency-sync ./src/index.js --debug --once"
   },
   "dependencies": {
     "level-create-batch": "1.1.0",
@@ -25,16 +25,9 @@
     "src"
   ],
   "devDependencies": {
-    "dependency-sync": "2.1.0",
     "faucet": "0.0.1",
     "rimraf": "2.6.1",
-    "tape": "4.6.3"
-  },
-  "dependency-sync": {
-    "args": [
-      "src/index.js",
-      "--debug"
-    ]
+    "tape": "4.9.0"
   },
   "license": "Apache-2.0"
 }
