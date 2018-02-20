@@ -1,6 +1,6 @@
 {
   "name": "level-eventstore",
-  "version": "7.1.11",
+  "version": "7.1.12",
   "main": "src/index.js",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "level-create-batch": "1.1.0",
-    "level-eventstore-client": "7.1.11",
+    "level-eventstore-client": "7.1.12",
     "level-logs": "1.2.0",
     "leveldb-mount": "4.1.4",
     "once": "1.4.0",
