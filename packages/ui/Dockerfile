@@ -2,11 +2,8 @@ FROM jameskyburz/node:8.9.4-alpine as react
 
 LABEL maintainer="James Kyburz james.kyburz@gmail.com"
 
-ENV SERVE_USER guest
-ENV SERVE_PASSWORD guest
 ENV REACT_APP_BUILD /usr/src/app/src/ui/build
 ENV LOG_LEVEL warn
-ENV PORT 5000
 
 RUN ./node_modules/.bin/serve-create-react-app
 
@@ -28,6 +25,11 @@ RUN \
   npm install --production
 
 COPY . /usr/src/app
+
+ENV SERVE_USER guest
+ENV SERVE_PASSWORD guest
+ENV PORT 5000
+ENV REACT_APP_BUILD /usr/src/app/src/ui/build
 
 USER node
 
