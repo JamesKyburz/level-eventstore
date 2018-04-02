@@ -1,13 +1,19 @@
-FROM jameskyburz/node:8.9.4-alpine as react
+FROM jameskyburz/node:8.11.0-alpine as react
 
 LABEL maintainer="James Kyburz james.kyburz@gmail.com"
 
 ENV REACT_APP_BUILD /usr/src/app/src/ui/build
 ENV LOG_LEVEL warn
 
-RUN ./node_modules/.bin/serve-create-react-app
+RUN npm install npm@latest -g
 
-FROM node:8.9.4-alpine
+RUN cd /usr/src/app/src/ui && \
+  npm ci && \
+  npm run build
+
+FROM node:8.11.0-alpine
+
+RUN npm install npm@latest -g
 
 WORKDIR /usr/src/app
 
@@ -19,10 +25,10 @@ COPY --from=react /usr/src/app/src/ui/package* /usr/src/app/src/ui/
 
 RUN \
   rm -rf node_modules && \
-  npm install --production && \
+  npm ci --production && \
   cd src/ui && \
   rm -rf node_modules && \
-  npm install --production
+  npm ci --production
 
 COPY . /usr/src/app
 
