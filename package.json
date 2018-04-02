@@ -9,13 +9,12 @@
     "email": "james.kyburz@gmail.com"
   },
   "scripts": {
-    "publish:all": "standard && lerna publish --exact --force-publish=\"*\"",
+    "publish:all": "npx standard && lerna publish --exact --force-publish=\"*\"",
     "test": "lerna exec npm install && lerna run test",
     "prepublish:all": "npm run test"
   },
   "devDependencies": {
-    "lerna": "2.4.0",
-    "standard": "10.0.3"
+    "lerna": "^3.0.0-beta.13"
   },
   "private": true
 }
