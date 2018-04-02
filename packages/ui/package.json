@@ -1,12 +1,12 @@
 {
   "name": "level-eventstore-ui",
-  "version": "7.1.16",
+  "version": "7.1.17",
   "scripts": {
     "start": "node src/index",
     "missing": "dependency-sync --once"
   },
   "dependencies": {
-    "level-eventstore-client": "7.1.16",
+    "level-eventstore-client": "7.1.17",
     "moment": "2.22.0",
     "serve-create-react-app": "4.1.15",
     "server-base": "4.10.5"
