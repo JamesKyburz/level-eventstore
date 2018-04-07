@@ -14,4 +14,4 @@ os:
 node_js:
   - "8"
 script:
-  - ./node_modules/.bin/lerna exec npm install && ./node_modules/.bin/lerna run test
+  - npx macleod exec npm i && npx macleod exec npm t
