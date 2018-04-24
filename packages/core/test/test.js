@@ -267,6 +267,34 @@ test('streamById', t => {
     })
 })
 
+test('streamById limit 1', t => {
+  let count = 0
+  const actual = []
+  const expected = [
+    {
+      seq: 1,
+      value: {
+        type: 'signup',
+        payload: {
+          email: 'foo@bar.com',
+          id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
+        },
+        createdAt: 0
+      }
+    }
+  ]
+  client
+    .streamById('users', 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543', { limit: 1 }, err => {
+      t.error(err, 'no error')
+      t.deepEqual(expected, actual, 'correct stream data')
+      t.end()
+    })
+    .on('data', data => {
+      expected[count++].value.createdAt = data.value.createdAt
+      actual.push(data)
+    })
+})
+
 test('logStream', t => {
   t.plan(2)
   const expected = {
