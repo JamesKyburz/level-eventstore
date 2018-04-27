@@ -284,11 +284,16 @@ test('streamById limit 1', t => {
     }
   ]
   client
-    .streamById('users', 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543', { limit: 1 }, err => {
-      t.error(err, 'no error')
-      t.deepEqual(expected, actual, 'correct stream data')
-      t.end()
-    })
+    .streamById(
+      'users',
+      'd45e9c20-dec1-4ffc-b527-ebaa5e40a543',
+      { limit: 1 },
+      err => {
+        t.error(err, 'no error')
+        t.deepEqual(expected, actual, 'correct stream data')
+        t.end()
+      }
+    )
     .on('data', data => {
       expected[count++].value.createdAt = data.value.createdAt
       actual.push(data)
@@ -362,6 +367,57 @@ test('wildcard event handler', t => {
           'correct state created'
         )
       }
+      close()
+    }
+  })
+})
+
+test('wildcard event handler with ignore', t => {
+  t.plan(1)
+
+  const fail = () => {
+    close()
+    t.fail()
+  }
+
+  const close = client.handleEvents({
+    log: 'users',
+    onError: fail,
+    ignore: new Set(['signup'])
+  })({
+    async '*' ({ type, payload, seq }) {
+      t.deepEqual(
+        { payload, type },
+        {
+          payload: {
+            id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
+          },
+          type: 'verifyAccount'
+        },
+        'signup event ignored'
+      )
+      close()
+    }
+  })
+})
+
+test('event handlers with ignore', t => {
+  t.plan(1)
+
+  const fail = () => {
+    close()
+    t.fail()
+  }
+
+  let eventCount = 0
+
+  const close = client.handleEvents({ log: 'users', onError: fail, ignore: new Set(['signup']) })({
+    async signup ({ type, payload, seq }) {
+      eventCount++
+    },
+    async verifyAccount ({ type, payload, seq }) {
+      eventCount++
+      t.equals(1, eventCount, 'only verifyAccount handled')
       close()
     }
   })
