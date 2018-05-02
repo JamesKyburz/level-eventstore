@@ -84,7 +84,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
     return dest
   }
 
-  function handleEvents ({ log, since, onError, updateSince, ignore }) {
+  function handleEvents ({ log, since, onError, updateSince }) {
     const client = Client({ url: wsUrl })
     const logs = Logs(client.db)
     const close = () => client.close()
@@ -96,7 +96,6 @@ module.exports = ({ wsUrl, httpUrl }) => {
       log,
       onError,
       updateSince,
-      ignore,
       close
     })
   }

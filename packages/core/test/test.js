@@ -372,57 +372,6 @@ test('wildcard event handler', t => {
   })
 })
 
-test('wildcard event handler with ignore', t => {
-  t.plan(1)
-
-  const fail = () => {
-    close()
-    t.fail()
-  }
-
-  const close = client.handleEvents({
-    log: 'users',
-    onError: fail,
-    ignore: new Set(['signup'])
-  })({
-    async '*' ({ type, payload, seq }) {
-      t.deepEqual(
-        { payload, type },
-        {
-          payload: {
-            id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
-          },
-          type: 'verifyAccount'
-        },
-        'signup event ignored'
-      )
-      close()
-    }
-  })
-})
-
-test('event handlers with ignore', t => {
-  t.plan(1)
-
-  const fail = () => {
-    close()
-    t.fail()
-  }
-
-  let eventCount = 0
-
-  const close = client.handleEvents({ log: 'users', onError: fail, ignore: new Set(['signup']) })({
-    async signup ({ type, payload, seq }) {
-      eventCount++
-    },
-    async verifyAccount ({ type, payload, seq }) {
-      eventCount++
-      t.equals(1, eventCount, 'only verifyAccount handled')
-      close()
-    }
-  })
-})
-
 test('cleanup', t => {
   if (server) server.kill()
   t.end()

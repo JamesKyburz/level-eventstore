@@ -15,15 +15,7 @@ const callHandler = (fn, cb) => {
   }
 }
 
-module.exports = ({
-  stream,
-  since,
-  log,
-  onError,
-  updateSince,
-  close,
-  ignore
-}) => {
+module.exports = ({ stream, since, log, onError, updateSince, close }) => {
   onError = onError || (f => f)
   updateSince = updateSince || ((seq, cb) => cb(null))
   return handlers => {
@@ -45,9 +37,7 @@ module.exports = ({
           if (err) return cb(err)
           callHandler(updateSince, next)(data.seq)
         }
-        if (ignore && ignore.has(value.type)) {
-          next(null)
-        } else if (handler) {
+        if (handler) {
           callHandler(handler, handled)(value.payload)
         } else if (wildcardHandler) {
           callHandler(wildcardHandler, handled)({
@@ -56,7 +46,7 @@ module.exports = ({
             seq: data.seq
           })
         } else {
-          handled(null)
+          next(null)
         }
       })
 
