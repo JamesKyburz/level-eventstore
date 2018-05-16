@@ -3,7 +3,7 @@
   "version": "8.0.0",
   "scripts": {
     "start": "node src/index",
-    "missing": "dependency-sync --once"
+    "missing": "npx dependency-sync --once --debug src/index.js"
   },
   "dependencies": {
     "level-eventstore-client": "8.0.0",
@@ -11,13 +11,8 @@
     "serve-create-react-app": "4.1.15",
     "server-base": "4.10.5"
   },
-  "devDependencies": {
-    "dependency-sync": "2.1.0"
-  },
-  "dependency-sync": {
-    "args": [
-      "src/index.js",
-      "--debug"
-    ]
-  }
+  "files": [
+    "src"
+  ],
+  "license": "Apache-2.0"
 }
