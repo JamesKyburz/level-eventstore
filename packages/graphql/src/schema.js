@@ -57,7 +57,7 @@ module.exports = createSchema({
   }
 })
 
-async function logList (root, args, context, ast) {
+function logList (root, args, context, ast) {
   return new Promise((resolve, reject) => {
     client.logList((err, logs) => {
       if (err) return reject(err)
@@ -68,14 +68,13 @@ async function logList (root, args, context, ast) {
   })
 }
 
-async function append (root, { log, type, id, jsonBody: body }, ast) {
+function append (root, { log, type, id, jsonBody: body }, ast) {
   const payload = JSON.parse(body)
   if (id) payload.id = id
-  await client.append({ type, log, payload })
-  return true
+  return client.append({ type, log, payload }).then(() => true)
 }
 
-async function lastSequence (log) {
+function lastSequence (log) {
   return new Promise((resolve, reject) => {
     client
       .logStream(log, { reverse: true, limit: 1 }, err => {
@@ -85,7 +84,7 @@ async function lastSequence (log) {
   })
 }
 
-async function streamById (
+function streamById (
   root,
   { log, id, reverse, limit, skip },
   context,
@@ -107,7 +106,7 @@ async function streamById (
   })
 }
 
-async function logStream (root, { log, reverse, limit, skip }, context, ast) {
+function logStream (root, { log, reverse, limit, skip }, context, ast) {
   const events = []
   let count = 0
   return new Promise((resolve, reject) => {

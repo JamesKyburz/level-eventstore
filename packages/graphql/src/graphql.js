@@ -16,7 +16,6 @@ function html (req, res) {
 function * query (req, res) {
   res.setNextErrorCode(400)
   const { query, variables, operationName } = yield req.json({ log: false })
-  console.log({ query, variables })
   const result = yield graphql(
     schema,
     query,
