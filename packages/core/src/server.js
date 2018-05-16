@@ -7,6 +7,9 @@ const credentials = process.env.CREDENTIALS || 'guest:guest'
 
 sequences((err, sequences) => {
   if (err) throw err
-  const server = base('level-eventstore', routes.bind(null, { sequences, credentials })).start(5000)
+  const server = base(
+    'level-eventstore',
+    routes({ sequences, credentials })
+  ).start(5000)
   leveldb.server(server, './eventstore', { replCredentials: credentials })
 })
