@@ -1,0 +1,19 @@
+{
+  "name": "level-eventstore-graphql",
+  "version": "8.0.0",
+  "scripts": {
+    "start": "node src/index",
+    "missing": "npx dependency-sync --once --debug src/index.js"
+  },
+  "dependencies": {
+    "graphql": "0.13.2",
+    "graphql-create-schema": "0.0.4",
+    "level-eventstore-client": "8.0.0",
+    "moment": "2.22.1",
+    "server-base": "5.0.7"
+  },
+  "files": [
+    "src"
+  ],
+  "license": "Apache-2.0"
+}
