@@ -94,7 +94,7 @@ function streamById (
   let count = 0
   return new Promise((resolve, reject) => {
     client
-      .streamById(log, id, { limit: limit || -1, reverse: !!reverse }, err => {
+      .streamById(log, id, { limit: limit + (skip || 0) || -1, reverse: !!reverse }, err => {
         if (err) return reject(err)
         resolve(events)
       })
@@ -111,7 +111,7 @@ function logStream (root, { log, reverse, limit, skip }, context, ast) {
   let count = 0
   return new Promise((resolve, reject) => {
     client
-      .logStream(log, { limit: limit || -1, reverse: !!reverse }, err => {
+      .logStream(log, { limit: limit + (skip || 0) || -1, reverse: !!reverse }, err => {
         if (err) return reject(err)
         resolve(events)
       })
