@@ -1,12 +1,12 @@
 {
   "name": "level-eventstore-ui",
-  "version": "8.2.0",
+  "version": "8.2.1",
   "scripts": {
     "start": "node src/index",
     "missing": "npx dependency-sync --once --debug src/index.js"
   },
   "dependencies": {
-    "level-eventstore-client": "8.2.0",
+    "level-eventstore-client": "8.2.1",
     "moment": "2.22.0",
     "serve-create-react-app": "4.1.15",
     "server-base": "4.10.5"
