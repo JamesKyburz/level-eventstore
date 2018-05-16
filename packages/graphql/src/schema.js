@@ -12,9 +12,9 @@ module.exports = createSchema({
     query: `
     # List all logs.
     logList: [Log]!
-    # List all events by id for a given log.
+    # List all events by id for a given log, default limit is 1000.
     streamById(log: String!, id: String!, reverse: Boolean, limit: Float, skip: Float): [StreamEvent]!
-    # List all events for a given log.
+    # List all events for a given log, default limit is 1000.
     logStream(log: String!, reverse: Boolean, limit: Float, skip: Float): [LogEvent]!
     `,
     mutation: `
@@ -86,7 +86,7 @@ function lastSequence (log) {
 
 function streamById (
   root,
-  { log, id, reverse, limit, skip },
+  { log, id, reverse, limit = 1000, skip },
   context,
   ast
 ) {
@@ -94,10 +94,15 @@ function streamById (
   let count = 0
   return new Promise((resolve, reject) => {
     client
-      .streamById(log, id, { limit: limit + (skip || 0) || -1, reverse: !!reverse }, err => {
-        if (err) return reject(err)
-        resolve(events)
-      })
+      .streamById(
+        log,
+        id,
+        { limit: limit + (skip || 0) || -1, reverse: !!reverse },
+        err => {
+          if (err) return reject(err)
+          resolve(events)
+        }
+      )
       .on('data', item => {
         count++
         if (count <= skip && skip) return
@@ -106,15 +111,19 @@ function streamById (
   })
 }
 
-function logStream (root, { log, reverse, limit, skip }, context, ast) {
+function logStream (root, { log, reverse, limit = 1000, skip }, context, ast) {
   const events = []
   let count = 0
   return new Promise((resolve, reject) => {
     client
-      .logStream(log, { limit: limit + (skip || 0) || -1, reverse: !!reverse }, err => {
-        if (err) return reject(err)
-        resolve(events)
-      })
+      .logStream(
+        log,
+        { limit: limit + (skip || 0) || -1, reverse: !!reverse },
+        err => {
+          if (err) return reject(err)
+          resolve(events)
+        }
+      )
       .on('data', item => {
         count++
         if (count <= skip && skip) return
