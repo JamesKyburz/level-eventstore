@@ -137,7 +137,7 @@ function event ({ seq: sequence, value }) {
     type: value.type,
     sequence,
     createdAt: new Moment(value.createdAt).fromNow(),
-    id: value.payload.id,
+    id: value.payload.id || 'undefined',
     payload: JSON.stringify(value.payload)
   }
 }

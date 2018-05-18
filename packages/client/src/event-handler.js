@@ -37,9 +37,9 @@ module.exports = ({ stream, since, log, onError, updateSince, close }) => {
           if (err) return cb(err)
           callHandler(updateSince, next)(data.seq)
         }
-        if (handler) {
+        if (handler && value.payload.id) {
           callHandler(handler, handled)(value.payload)
-        } else if (wildcardHandler) {
+        } else if (wildcardHandler && value.payload.id) {
           callHandler(wildcardHandler, handled)({
             payload: value.payload,
             type: value.type,

@@ -15,7 +15,7 @@ let server
 test('start server', t => {
   rimraf(path.join(__dirname, '../eventstore'), err => {
     t.error(err, 'remove eventstore')
-    server = spawn('node', [path.join(__dirname, '../src/server')])
+    server = spawn('node', [path.join(__dirname, '../src/server')], { stdio: 'inherit' })
     process.on('exit', server.kill.bind(server))
     ;(function ping () {
       const request = http.get(
@@ -61,6 +61,15 @@ test('event payload mandatory', t => {
   delete event.payload
   client.append(event, err => {
     t.equals(err.message, 'event payload must be specified')
+  })
+})
+
+test('event payload not an object', t => {
+  t.plan(1)
+  const event = validEvent()
+  event.payload = 'test'
+  client.append(event, err => {
+    t.equals(err.message, 'payload type incorrect, must be an object')
   })
 })
 
