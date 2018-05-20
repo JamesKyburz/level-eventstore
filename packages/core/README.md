@@ -32,36 +32,30 @@ docker pull jameskyburz/level-eventstore:version
 ```js
 const wsUrl = 'ws://guest:guest@localhost:5000'
 const httpUrl = 'http://guest:guest@localhost:5000'
-const client = require('level-eventstore').client({ wsUrl, httpUrl })
+const client = require('level-eventstore-client')({ wsUrl, httpUrl })
 
-client.append({
+await client.append({
   log: 'users',
   type: 'signup',
   payload: {
     email: 'foo@bar'
   }
-}, (err) => {
-  if (err) console.error(err)
 })
 
-client.append({
+await client.append({
   log: 'users',
   type: 'verifyAccount',
   payload: {
     id: '38390783-cd60-4190-8b94-a3d4ac24d653'
   }
-}, (err) => {
-  if (err) console.error(err)
 })
 
 const close = client.handleEvents({ log: 'users', since: 0 })({
-  signup (payload, cb) {
+  async signup (payload) {
     console.log('insert', payload)
-    cb(null)
   },
-  verifyAccount (payload, cb) {
+  async verifyAccount (payload) {
     console.log('verify', payload)
-    cb(null)
   }
 })
 
@@ -70,7 +64,7 @@ verify { id: '38390783-cd60-4190-8b94-a3d4ac24d653' }
 
 ```
 
-event handlers can also be generators or async functions, in this case they do not need a `callback` argument.
+event handlers can be generators, async functions, or vanilla functions in this case they need an extra `callback` argument.
 
 # license
 
