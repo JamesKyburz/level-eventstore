@@ -9,7 +9,7 @@
     "level-eventstore-client": "8.2.5",
     "moment": "2.22.0",
     "serve-create-react-app": "4.1.15",
-    "server-base": "4.10.5"
+    "server-base": "5.0.7"
   },
   "files": [
     "src"
