@@ -1,4 +1,4 @@
-FROM jameskyburz/node:8.11.0-alpine as react
+FROM jameskyburz/node:8.11.2-alpine as react
 
 LABEL maintainer="James Kyburz james.kyburz@gmail.com"
 
