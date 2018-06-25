@@ -1,4 +1,4 @@
-FROM jameskyburz/node:8.11.2-alpine as react
+FROM jameskyburz/node:8.11.3-alpine as react
 
 LABEL maintainer="James Kyburz james.kyburz@gmail.com"
 
@@ -11,7 +11,7 @@ RUN cd /usr/src/app/src/ui && \
   npm ci && \
   npm run build
 
-FROM node:8.11.0-alpine
+FROM node:8.11.3-alpine
 
 RUN npm install npm@latest -g
 
