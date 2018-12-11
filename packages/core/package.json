@@ -16,18 +16,18 @@
     "level-create-batch": "1.1.0",
     "level-eventstore-client": "8.2.7",
     "level-logs": "1.2.0",
-    "leveldb-mount": "4.1.4",
+    "leveldb-mount": "4.1.10",
     "once": "1.4.0",
-    "server-base": "4.10.5",
-    "uuid": "3.0.1"
+    "server-base": "6.1.2",
+    "uuid": "3.3.2"
   },
   "files": [
     "src"
   ],
   "devDependencies": {
     "faucet": "0.0.1",
-    "rimraf": "2.6.1",
-    "tape": "4.9.0"
+    "rimraf": "2.6.2",
+    "tape": "4.9.1"
   },
   "license": "Apache-2.0"
 }
