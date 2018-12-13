@@ -25,6 +25,7 @@ function append (sequences) {
       { key: streamKey, value: sequences[log] },
       { key: logKey, value: event }
     ]
+    res.setNextErrorMessage('key is write-locked')
     yield cb => batch(db, rows, cb)
     res.json({ id })
   }
