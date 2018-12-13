@@ -17,7 +17,7 @@
     "pump": "3.0.0",
     "run-duck-run": "2.1.1",
     "through2": "2.0.3",
-    "websocket-stream": "5.1.1"
+    "websocket-stream": "5.1.2"
   },
   "files": [
     "src"
