@@ -16,7 +16,7 @@
     "level-create-batch": "1.1.0",
     "level-eventstore-client": "9.0.0",
     "level-logs": "1.2.0",
-    "leveldb-mount": "4.1.11",
+    "leveldb-mount": "5.0.0",
     "once": "1.4.0",
     "server-base": "6.1.2",
     "uuid": "3.3.2"
