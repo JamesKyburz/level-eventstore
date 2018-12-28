@@ -1,17 +1,11 @@
 const runGenerator = require('run-duck-run')
-const isGenerator = require('is-generator-function')
 const through = require('through2')
 const pump = require('pump')
 const callHandler = (fn, cb) => {
   return payload => {
-    if (isGenerator(fn)) {
-      runGenerator(fn, cb)(payload)
-    } else {
-      const result = fn(payload, cb)
-      if (result && result.then) {
-        result.then(data => cb(null, data)).catch(cb)
-      }
-    }
+    const result = fn(payload, cb)
+    if (result && result.then) result.then(data => cb(null, data)).catch(cb)
+    if (result && result.next) runGenerator(result, cb)
   }
 }
 
