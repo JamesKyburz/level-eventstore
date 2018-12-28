@@ -5,7 +5,7 @@ const callHandler = (fn, cb) => {
   return payload => {
     const result = fn(payload, cb)
     if (result && result.then) result.then(data => cb(null, data)).catch(cb)
-    if (result && result.next) runGenerator(result, cb)
+    if (result && result.next) runGenerator(result, cb)()
   }
 }
 
