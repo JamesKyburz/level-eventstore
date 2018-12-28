@@ -1,6 +1,6 @@
 {
   "name": "level-eventstore-graphql",
-  "version": "10.0.4",
+  "version": "10.0.3",
   "scripts": {
     "start": "node src/index",
     "missing": "npx dependency-sync --once --debug src/index.js"
