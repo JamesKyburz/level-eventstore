@@ -15,7 +15,7 @@
     "multileveldown": "2.3.1",
     "pump": "3.0.0",
     "run-duck-run": "2.2.0",
-    "through2": "3.0.0",
+    "through2": "3.0.1",
     "websocket-stream": "5.1.2"
   },
   "files": [
