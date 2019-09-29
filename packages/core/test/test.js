@@ -1,7 +1,7 @@
 const test = require('tape')
 const http = require('http')
 
-const client = require('../').client({
+const client = require('../../client')({
   wsUrl: 'ws://guest:guest@localhost:5000',
   httpUrl: 'http://guest:guest@localhost:5000'
 })
@@ -15,7 +15,9 @@ let server
 test('start server', t => {
   rimraf(path.join(__dirname, '../eventstore'), err => {
     t.error(err, 'remove eventstore')
-    server = spawn('node', [path.join(__dirname, '../src/server')], { stdio: 'inherit' })
+    server = spawn('node', [path.join(__dirname, '../src/server')], {
+      stdio: 'inherit'
+    })
     process.on('exit', server.kill.bind(server))
     ;(function ping () {
       const request = http.get(

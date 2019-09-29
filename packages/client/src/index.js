@@ -6,6 +6,7 @@ const eventHandler = require('./event-handler')
 const Streams = require('./streams')
 const through = require('through2')
 const pump = require('pump')
+const isLambda = require('is-lambda')
 
 module.exports = ({ wsUrl, httpUrl }) => {
   return { append, handleEvents, streamById, logStream, logList }
@@ -33,6 +34,9 @@ module.exports = ({ wsUrl, httpUrl }) => {
     return fetch(httpUrl + '/append', {
       method: 'PUT',
       retry: options.retry,
+      ...(isLambda && {
+        agent: require(/^https/.test(httpUrl) ? 'https' : 'http').globalAgent
+      }),
       body: JSON.stringify(event)
     })
       .then(res => {

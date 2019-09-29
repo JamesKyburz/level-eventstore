@@ -10,6 +10,7 @@
     "missing": "npx dependency-sync --once --debug ./src/index.js"
   },
   "dependencies": {
+    "is-lambda": "1.0.1",
     "level-logs": "1.2.0",
     "make-fetch-happen": "5.0.0",
     "multileveldown": "2.3.1",

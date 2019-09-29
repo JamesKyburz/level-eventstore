@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node src/index",
     "lint": "npx standard",
-    "test": "tape test/*.js | faucet",
+    "test": "tape test/*.js | faucet && LAMBDA_TASK_ROOT=1 AWS_EXECUTION_ENV=1 tape test/*.js | faucet",
     "missing": "npx dependency-sync ./src/index.js --debug --once"
   },
   "dependencies": {
