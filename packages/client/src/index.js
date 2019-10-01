@@ -96,7 +96,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
   function handleEvents ({ log, since, onError, updateSince }) {
     const client = Client({ url: wsUrl })
     const logs = Logs(client.db)
-    const close = () => client.close()
+    const close = cb => client.close(cb)
     return eventHandler({
       stream (log, since) {
         return logs.createReadStream(log, { since })
