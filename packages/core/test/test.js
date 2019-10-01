@@ -1,35 +1,38 @@
 const test = require('tape')
 const http = require('http')
-
-const client = require('../../client')({
-  wsUrl: 'ws://guest:guest@localhost:5000',
-  httpUrl: 'http://guest:guest@localhost:5000'
-})
-
+const isLambda = require('is-lambda')
 const { spawn } = require('child_process')
 const rimraf = require('rimraf')
 const path = require('path')
+const port = isLambda && process.env.NO_SERVER ? 5002 : 5000
+
+const client = require('../../client')({
+  wsUrl: `ws://guest:guest@localhost:${port}`,
+  httpUrl: `http://guest:guest@localhost:${port}`
+})
 
 let server
 
-test('start server', t => {
-  rimraf(path.join(__dirname, '../eventstore'), err => {
-    t.error(err, 'remove eventstore')
-    server = spawn('node', [path.join(__dirname, '../src/server')], {
-      stdio: 'inherit'
+!process.env.NO_SERVER &&
+  test('start server', t => {
+    rimraf(path.join(__dirname, '../eventstore'), err => {
+      t.error(err, 'remove eventstore')
+      server = spawn('node', [path.join(__dirname, '../src/server')], {
+        stdio: 'inherit'
+      })
+      process.on('exit', server.kill.bind(server))
+      t.end()
     })
-    process.on('exit', server.kill.bind(server))
-    ;(function ping () {
-      const request = http.get(
-        'http://guest:guest@localhost:5000/ping',
-        res => {
-          if (res.statusCode === 200) return t.end()
-          setTimeout(ping, 300)
-        }
-      )
-      request.on('error', setTimeout.bind(null, ping, 300))
-    })()
   })
+
+test('server is ready', t => {
+  ;(function ping () {
+    const request = http.get(`http://guest:guest@localhost:${port}/ping`, res => {
+      if (res.statusCode === 200) return t.end()
+      setTimeout(ping, 300)
+    })
+    request.on('error', setTimeout.bind(null, ping, 300))
+  })()
 })
 
 test('event is mandatory', t => {
@@ -108,16 +111,19 @@ test('insert users', t => {
     }
   ]
 
-  const pending = events.map(event => client.append(event, { retry: true }))
+  const next = () => {
+    const event = events.shift()
+    if (event) {
+      client.append(event, { retry: true }).then(next, t.fail.bind(t))
+    } else {
+      t.end()
+    }
+  }
 
-  Promise.all(pending)
-    .then(() => t.end())
-    .catch(t.fail)
+  next()
 })
 
 test('insert duplicate fails', t => {
-  t.plan(1)
-
   const events = [
     {
       type: 'create',
@@ -347,7 +353,6 @@ test('logList', t => {
 
 test('wildcard event handler', t => {
   t.plan(3)
-
   const fail = () => {
     close()
     t.fail()
@@ -377,8 +382,8 @@ test('wildcard event handler', t => {
           ],
           'correct state created'
         )
+        close()
       }
-      close()
     }
   })
 })

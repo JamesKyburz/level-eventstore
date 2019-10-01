@@ -7,6 +7,7 @@ const Streams = require('./streams')
 const through = require('through2')
 const pump = require('pump')
 const isLambda = require('is-lambda')
+const autoClose = !!isLambda
 
 module.exports = ({ wsUrl, httpUrl }) => {
   return { append, handleEvents, streamById, logStream, logList }
@@ -52,7 +53,8 @@ module.exports = ({ wsUrl, httpUrl }) => {
   function logList (cb) {
     const client = Client({ url: wsUrl })
     const logs = Logs(client.db)
-    return logs.list(cb)
+    const finished = createFinished(client, cb)
+    return logs.list(finished)
   }
 
   function logStream (log, opts, cb) {
@@ -62,10 +64,12 @@ module.exports = ({ wsUrl, httpUrl }) => {
     }
     const client = Client({ url: wsUrl })
     const logs = Logs(client.db)
+    const finished = createFinished(client, cb)
+
     return logs
       .createReadStream(log, opts)
-      .on('error', cb)
-      .on('end', cb)
+      .on('error', finished)
+      .on('end', finished)
   }
 
   function streamById (log, id, opts, cb) {
@@ -84,7 +88,8 @@ module.exports = ({ wsUrl, httpUrl }) => {
       })
     })
     const dest = through.obj()
-    process.nextTick(() => pump(rs, map, dest, cb))
+    const finished = createFinished(client, cb)
+    process.nextTick(() => pump(rs, map, dest, finished))
     return dest
   }
 
@@ -102,5 +107,12 @@ module.exports = ({ wsUrl, httpUrl }) => {
       updateSince,
       close
     })
+  }
+}
+
+function createFinished (client, cb) {
+  return (err, data) => {
+    if (autoClose) return client.close(() => cb(err, data))
+    cb(err, data)
   }
 }

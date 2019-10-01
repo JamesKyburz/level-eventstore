@@ -23,10 +23,18 @@ function client (opt = {}) {
   let db = dbs[cacheKey]
   let closed = false
   let ws
-  const close = () => {
+  const close = cb => {
     delete dbs[cacheKey]
-    if (ws) ws.destroy()
     closed = true
+    if (ws) {
+      ws.on('close', () => {
+        ws = null
+        if (cb) cb()
+      })
+      ws.destroy()
+    } else {
+      if (cb) cb()
+    }
   }
 
   if (!db) {
