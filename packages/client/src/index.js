@@ -110,7 +110,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
   }
 }
 
-function createFinished (client, cb) {
+function createFinished (client, cb = f => f) {
   return (err, data) => {
     if (autoClose) return client.close(() => cb(err, data))
     cb(err, data)

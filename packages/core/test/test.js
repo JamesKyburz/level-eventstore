@@ -284,6 +284,44 @@ test('streamById', t => {
     })
 })
 
+test('streamById with no callback', t => {
+  let count = 0
+  const actual = []
+  const expected = [
+    {
+      seq: 1,
+      value: {
+        type: 'signup',
+        payload: {
+          email: 'foo@bar.com',
+          id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
+        },
+        createdAt: 0
+      }
+    },
+    {
+      seq: 2,
+      value: {
+        type: 'verifyAccount',
+        payload: { id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543' },
+        createdAt: 0
+      }
+    }
+  ]
+  client
+    .streamById('users', 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543')
+    .on('data', data => {
+      expected[count++].value.createdAt = data.value.createdAt
+      actual.push(data)
+    })
+    .on('error', err => t.fail(err))
+    .on('end', () => {
+      t.deepEqual(expected, actual, 'correct stream data')
+      t.end()
+    })
+})
+
+
 test('streamById limit 1', t => {
   let count = 0
   const actual = []
@@ -336,6 +374,29 @@ test('logStream', t => {
     .logStream('users', { since: 0, until: 2 }, err => {
       t.error(err, 'no error')
     })
+    .on('data', actual => {
+      expected.value.createdAt = actual.value.createdAt
+      t.deepEqual(expected, actual, 'correct logStream data')
+    })
+})
+
+test('logStream with no callback', t => {
+  t.plan(1)
+  const expected = {
+    log: 'users',
+    seq: 1,
+    value: {
+      type: 'signup',
+      payload: {
+        email: 'foo@bar.com',
+        id: 'd45e9c20-dec1-4ffc-b527-ebaa5e40a543'
+      },
+      createdAt: 1492177730433
+    }
+  }
+
+  client
+    .logStream('users', { since: 0, until: 2 })
     .on('data', actual => {
       expected.value.createdAt = actual.value.createdAt
       t.deepEqual(expected, actual, 'correct logStream data')
