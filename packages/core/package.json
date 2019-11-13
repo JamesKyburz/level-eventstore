@@ -18,7 +18,7 @@
     "level-logs": "1.2.0",
     "leveldb-mount": "5.0.0",
     "once": "1.4.0",
-    "server-base": "7.0.84",
+    "server-base": "7.0.86",
     "uuid": "3.3.3"
   },
   "files": [
