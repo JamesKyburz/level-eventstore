@@ -16,9 +16,9 @@
     "level-create-batch": "1.1.0",
     "level-eventstore-client": "10.1.4",
     "level-logs": "1.2.0",
-    "leveldb-mount": "5.0.0",
+    "leveldb-mount": "6.0.0",
     "once": "1.4.0",
-    "server-base": "7.0.84",
+    "server-base": "7.0.88",
     "uuid": "3.3.3"
   },
   "files": [
@@ -30,5 +30,15 @@
     "rimraf": "3.0.0",
     "tape": "4.11.0"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "description": "eventstore using leveldb",
+  "bugs": {
+    "url": "https://github.com/JamesKyburz/level-eventstore/issues"
+  },
+  "homepage": "https://github.com/JamesKyburz/level-eventstore#readme",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [],
+  "author": "James Kyburz <james.kyburz@gmail.com>"
 }

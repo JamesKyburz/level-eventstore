@@ -9,11 +9,16 @@
     "graphql": "14.5.8",
     "graphql-create-schema": "0.0.4",
     "level-eventstore-client": "10.1.4",
-    "moment": "2.23.0",
-    "server-base": "7.0.84"
+    "moment": "2.24.0",
+    "server-base": "7.0.88"
   },
   "files": [
     "src"
   ],
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "description": "level-eventstore graphql",
+  "main": "index.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "James Kyburz <james.kyburz@gmail.com>"
 }
