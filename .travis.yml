@@ -12,6 +12,6 @@ before_install:
 os:
   - linux
 node_js:
-  - "8"
+  - "12"
 script:
   - npx macleod exec npm i && npx macleod exec npm t
