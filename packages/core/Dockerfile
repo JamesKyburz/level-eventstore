@@ -1,15 +1,15 @@
-FROM jameskyburz/node:12.13.1-alpine-devtools as devtools
+FROM jameskyburz/node:12.14.0-alpine3.11-devtools as devtools
 
 LABEL maintainer="James Kyburz james.kyburz@gmail.com"
 
 WORKDIR /usr/src/app
 
 ENV NPM_CONFIG_LOGLEVEL warn
-ARG NODE_ENV=development
-COPY package.json package-lock*.json npm-shrinkwrap*.json /usr/src/app/
-RUN npm i
+COPY package.json .
+COPY package-lock.json .
+RUN npm install --production
 
-FROM node:12.13.1-alpine
+FROM node:12.14.0-alpine3.11
 
 WORKDIR /usr/src/app
 
