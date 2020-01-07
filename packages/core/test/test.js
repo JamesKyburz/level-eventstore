@@ -1,4 +1,4 @@
-const test = require('tape')
+const { test } = require('tap')
 const http = require('http')
 const isLambda = require('is-lambda')
 const { spawn } = require('child_process')
@@ -18,7 +18,7 @@ let server
     rimraf(path.join(__dirname, '../eventstore'), err => {
       t.error(err, 'remove eventstore')
       server = spawn('node', [path.join(__dirname, '../src/server')], {
-        stdio: 'inherit'
+        ...(process.env.DEBUG && { stdio: 'inherit' })
       })
       process.on('exit', server.kill.bind(server))
       t.end()
@@ -27,12 +27,46 @@ let server
 
 test('server is ready', t => {
   ;(function ping () {
-    const request = http.get(`http://guest:guest@localhost:${port}/ping`, res => {
-      if (res.statusCode === 200) return t.end()
-      setTimeout(ping, 300)
-    })
+    const request = http.get(
+      `http://guest:guest@localhost:${port}/ping`,
+      res => {
+        if (res.statusCode === 200) return t.end()
+        setTimeout(ping, 300)
+      }
+    )
     request.on('error', setTimeout.bind(null, ping, 300))
   })()
+})
+
+test('basic auth http', t => {
+  t.plan(1)
+  const httpClient = require('../../client')({
+    httpUrl: `http://localhost:${port}`
+  })
+
+  httpClient.append(
+    {
+      type: 'x',
+      log: 'x',
+      payload: {
+        foo: 'bar'
+      }
+    },
+    err => {
+      t.equals(err.message, 'Access denied')
+    }
+  )
+})
+
+test('basic auth websocket', t => {
+  t.plan(1)
+  const wsClient = require('../../client')({
+    wsUrl: `ws://localhost:${port}`,
+    retryWebSocket: false
+  })
+  wsClient.logList((err, actual) => {
+    t.equals(err.message, 'Connection to leader lost')
+  })
 })
 
 test('event is mandatory', t => {
@@ -176,18 +210,19 @@ test('event handlers', t => {
     },
     verifyAccount (payload, cb) {
       state[payload.id].verified = true
-      t.deepEqual(
-        state,
-        {
-          'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
-            email: 'foo@bar.com',
-            verified: true
-          }
-        },
-        'correct state created'
-      )
-      cb(null)
-      close()
+      close(() => {
+        t.deepEqual(
+          state,
+          {
+            'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
+              email: 'foo@bar.com',
+              verified: true
+            }
+          },
+          'correct state created'
+        )
+        cb(null)
+      })
     }
   })
 })
@@ -205,17 +240,18 @@ test('generator event handlers', t => {
     },
     * verifyAccount (payload) {
       state[payload.id].verified = true
-      t.deepEqual(
-        state,
-        {
-          'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
-            email: 'foo@bar.com',
-            verified: true
-          }
-        },
-        'correct state created'
-      )
-      close()
+      close(() => {
+        t.deepEqual(
+          state,
+          {
+            'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
+              email: 'foo@bar.com',
+              verified: true
+            }
+          },
+          'correct state created'
+        )
+      })
     }
   })
 })
@@ -233,17 +269,18 @@ test('async event handlers', t => {
     },
     async verifyAccount (payload) {
       state[payload.id].verified = true
-      t.deepEqual(
-        state,
-        {
-          'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
-            email: 'foo@bar.com',
-            verified: true
-          }
-        },
-        'correct state created'
-      )
-      close()
+      close(() => {
+        t.deepEqual(
+          state,
+          {
+            'd45e9c20-dec1-4ffc-b527-ebaa5e40a543': {
+              email: 'foo@bar.com',
+              verified: true
+            }
+          },
+          'correct state created'
+        )
+      })
     }
   })
 })
@@ -321,7 +358,6 @@ test('streamById with no callback', t => {
     })
 })
 
-
 test('streamById limit 1', t => {
   let count = 0
   const actual = []
@@ -395,12 +431,10 @@ test('logStream with no callback', t => {
     }
   }
 
-  client
-    .logStream('users', { since: 0, until: 2 })
-    .on('data', actual => {
-      expected.value.createdAt = actual.value.createdAt
-      t.deepEqual(expected, actual, 'correct logStream data')
-    })
+  client.logStream('users', { since: 0, until: 2 }).on('data', actual => {
+    expected.value.createdAt = actual.value.createdAt
+    t.deepEqual(expected, actual, 'correct logStream data')
+  })
 })
 
 test('logList', t => {
@@ -452,7 +486,7 @@ test('wildcard event handler', t => {
 test('cleanup', t => {
   if (server) server.kill()
   t.end()
-  process.exit(0)
+  process.nextTick(() => process.exit(0))
 })
 
 function validEvent () {
