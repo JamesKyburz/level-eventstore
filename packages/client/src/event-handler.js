@@ -50,9 +50,9 @@ module.exports = ({ stream, since, log, onError, updateSince, close }) => {
       })
     }
 
-    return () => {
+    return cb => {
       run = false
-      close()
+      close(cb)
     }
   }
 }
