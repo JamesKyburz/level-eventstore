@@ -1,4 +1,6 @@
-const leveldb = require('leveldb-mount')
-const db = leveldb.db('./eventstore')
+const level = require('level-party')
 
-module.exports = db
+module.exports = level('./eventstore', {
+  keyEncoding: 'utf-8',
+  valueEncoding: 'json'
+})

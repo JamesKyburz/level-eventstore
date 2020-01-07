@@ -1,20 +1,20 @@
 const append = require('./append')
+const auth = require('./auth')
 
 module.exports = routes
 
-function routes ({ sequences, credentials }) {
+function routes ({ sequences }) {
   return {
     '@setup': ctx => {
       ctx.use((req, res, next) => {
-        if (req.headers.authorization) {
-          const auth = Buffer.from(
-            req.headers.authorization.slice(6),
-            'base64'
-          ).toString()
-          if (auth === credentials) return next()
-        }
-        res.writeHead(401, { 'WWW-Authenticate': 'Basic' })
-        res.end('Access denied')
+        auth(req, err => {
+          if (err) {
+            res.writeHead(401, { 'WWW-Authenticate': 'Basic' })
+            res.end('Access denied')
+          } else {
+            next()
+          }
+        })
       })
     },
     '/append': {
