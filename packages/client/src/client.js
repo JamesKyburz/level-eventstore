@@ -1,5 +1,6 @@
 const websocket = require('websocket-stream')
 const multileveldown = require('multileveldown')
+const isLambda = require('is-lambda')
 const dbs = {}
 
 module.exports = client
@@ -20,7 +21,7 @@ function client (opt = {}) {
   if (!url) throw new Error('url must be specified')
 
   const cacheKey = keyEncoding + valueEncoding + url
-  let db = dbs[cacheKey]
+  let db = !isLambda && dbs[cacheKey]
   let closed = false
   let ws
   const close = cb => {
