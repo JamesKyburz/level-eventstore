@@ -7,12 +7,12 @@
     "url": "git://github.com/JamesKyburz/level-eventstore.git"
   },
   "scripts": {
-    "missing": "npx dependency-sync --once --debug ./src/index.js"
+    "missing": "npx dependency-sync"
   },
   "dependencies": {
     "is-lambda": "1.0.1",
     "level-logs": "1.2.0",
-    "make-fetch-happen": "6.1.0",
+    "make-fetch-happen": "7.1.0",
     "multileveldown": "3.0.0",
     "pump": "3.0.0",
     "run-duck-run": "2.2.0",

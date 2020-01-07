@@ -35,9 +35,6 @@ module.exports = ({ wsUrl, httpUrl }) => {
     return fetch(httpUrl + '/append', {
       method: 'PUT',
       retry: options.retry,
-      ...(isLambda && {
-        agent: require(/^https/.test(httpUrl) ? 'https' : 'http').globalAgent
-      }),
       body: JSON.stringify(event)
     })
       .then(res => {
