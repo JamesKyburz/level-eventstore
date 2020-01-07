@@ -6,17 +6,13 @@ const dbs = {}
 module.exports = client
 
 function client (opt = {}) {
-  const defaults = {
-    keyEncoding: 'utf8',
-    valueEncoding: 'json',
-    retryTimeout: 3000
-  }
-
-  const { keyEncoding, valueEncoding, retryTimeout, url } = Object.assign(
-    {},
-    defaults,
-    opt
-  )
+  const {
+    url,
+    keyEncoding = 'utf-8',
+    valueEncoding = 'json',
+    retry = true,
+    retryTimeout = 3000
+  } = opt
 
   if (!url) throw new Error('url must be specified')
 
@@ -42,14 +38,19 @@ function client (opt = {}) {
     db = dbs[cacheKey] = multileveldown.client({
       keyEncoding,
       valueEncoding,
-      retry: true
+      retry
     })
     const connect = () => {
       if (closed) return
       ws = websocket(url)
       const remote = db.connect()
       session(remote, ws)
-      ws.on('close', () => setTimeout(connect, retryTimeout))
+      ws.on('close', () => {
+        ws = null
+        if (retry) {
+          setTimeout(connect, retryTimeout)
+        }
+      })
     }
     connect()
   }
