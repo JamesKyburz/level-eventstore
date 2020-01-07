@@ -9,7 +9,7 @@ const pump = require('pump')
 const isLambda = require('is-lambda')
 const autoClose = !!isLambda
 
-module.exports = ({ wsUrl, httpUrl }) => {
+module.exports = ({ wsUrl, httpUrl, retryWebSocket = true }) => {
   return { append, handleEvents, streamById, logStream, logList }
 
   function append (event, options, cb) {
@@ -48,7 +48,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
   }
 
   function logList (cb) {
-    const client = Client({ url: wsUrl })
+    const client = createClient()
     const logs = Logs(client.db)
     const finished = createFinished(client, cb)
     return logs.list(finished)
@@ -59,7 +59,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
       cb = opts
       opts = {}
     }
-    const client = Client({ url: wsUrl })
+    const client = createClient()
     const logs = Logs(client.db)
     const finished = createFinished(client, cb)
 
@@ -74,7 +74,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
       cb = opts
       opts = {}
     }
-    const client = Client({ url: wsUrl })
+    const client = createClient()
     const stream = Streams(client.db)
     const logs = Logs(client.db)
     const rs = stream.createReadStream(log + id, opts)
@@ -91,7 +91,7 @@ module.exports = ({ wsUrl, httpUrl }) => {
   }
 
   function handleEvents ({ log, since, onError, updateSince }) {
-    const client = Client({ url: wsUrl })
+    const client = createClient()
     const logs = Logs(client.db)
     const close = cb => client.close(cb)
     return eventHandler({
@@ -104,6 +104,10 @@ module.exports = ({ wsUrl, httpUrl }) => {
       updateSince,
       close
     })
+  }
+
+  function createClient () {
+    return Client({ url: wsUrl, retry: retryWebSocket })
   }
 }
 
