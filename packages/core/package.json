@@ -20,7 +20,7 @@
     "multileveldown": "3.0.0",
     "once": "1.4.0",
     "server-base": "7.0.88",
-    "uuid": "7.0.0",
+    "uuid": "7.0.1",
     "websocket-stream": "5.5.0"
   },
   "files": [
