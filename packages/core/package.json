@@ -21,7 +21,7 @@
     "once": "1.4.0",
     "server-base": "7.0.88",
     "uuid": "7.0.2",
-    "websocket-stream": "5.5.0"
+    "websocket-stream": "5.5.1"
   },
   "files": [
     "src"
