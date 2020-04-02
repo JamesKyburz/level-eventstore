@@ -6,7 +6,7 @@
     "missing": "npx dependency-sync --once --debug src/index.js"
   },
   "dependencies": {
-    "graphql": "14.6.0",
+    "graphql": "15.0.0",
     "graphql-create-schema": "0.0.4",
     "level-eventstore-client": "12.0.2",
     "moment": "2.24.0",
