@@ -19,7 +19,7 @@
     "level-party": "4.0.0",
     "multileveldown": "3.0.0",
     "once": "1.4.0",
-    "server-base": "7.1.2",
+    "server-base": "7.1.22",
     "uuid": "8.1.0",
     "websocket-stream": "5.5.2"
   },
