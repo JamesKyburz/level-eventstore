@@ -1,4 +1,4 @@
-FROM jameskyburz/node:12.14.0-alpine3.11-devtools as devtools
+FROM jameskyburz/node:12.17.0-alpine3.11-devtools as devtools
 
 LABEL maintainer="James Kyburz james.kyburz@gmail.com"
 
