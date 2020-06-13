@@ -45,7 +45,7 @@ module.exports = ({ stream, since, log, onError, updateSince, close }) => {
       })
 
       pump(rs, handle, err => {
-        if (err) onError(err)
+        if (err) return onError(err)
         if (run) setTimeout(poll, err ? 30000 : 300)
       })
     }
