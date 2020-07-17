@@ -1,4 +1,4 @@
-FROM jameskyburz/node:12.17.0-alpine3.11-devtools as devtools
+FROM jameskyburz/node:12.18.2-alpine3.12-devtools as devtools
 
 LABEL maintainer="James Kyburz james.kyburz@gmail.com"
 
@@ -9,7 +9,7 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm install --production
 
-FROM node:12.14.0-alpine3.11
+FROM node:12.18.2-alpine3.12
 
 WORKDIR /usr/src/app
 
